@@ -92,26 +92,42 @@ function initControls(canvas) {
   canvas.addEventListener('contextmenu', (e) => e.preventDefault());
 
   // ── Touch ────────────────────────────────────────────────────────────────
+  // 1 finger  → orbit
+  // 2 fingers spreading/pinching → zoom
+  // 2 fingers moving together    → pan
   let lastTouchDist = null;
+  let lastTouchMidX = null;
+  let lastTouchMidY = null;
 
   canvas.addEventListener('touchstart', (e) => {
     if (e.touches.length === 1) {
       camControls._dragging = true;
+      camControls._panning = false;
       camControls._lastX = e.touches[0].clientX;
       camControls._lastY = e.touches[0].clientY;
     }
     if (e.touches.length === 2) {
+      camControls._dragging = false;
       lastTouchDist = _touchDist(e);
+      lastTouchMidX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+      lastTouchMidY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
     }
     e.preventDefault();
   }, { passive: false });
 
-  canvas.addEventListener('touchend', () => {
-    camControls._dragging = false;
-    lastTouchDist = null;
+  canvas.addEventListener('touchend', (e) => {
+    if (e.touches.length < 2) {
+      lastTouchDist = null;
+      lastTouchMidX = null;
+      lastTouchMidY = null;
+    }
+    if (e.touches.length === 0) {
+      camControls._dragging = false;
+    }
   });
 
   canvas.addEventListener('touchmove', (e) => {
+    // ── 1 finger: orbit ──────────────────────────────────────────────────
     if (e.touches.length === 1 && camControls._dragging) {
       const dx = e.touches[0].clientX - camControls._lastX;
       const dy = e.touches[0].clientY - camControls._lastY;
@@ -124,17 +140,39 @@ function initControls(canvas) {
       );
       camControls.updateCamera();
     }
+
+    // ── 2 fingers: pinch-zoom + pan ───────────────────────────────────────
     if (e.touches.length === 2) {
       const dist = _touchDist(e);
-      if (lastTouchDist) {
+      const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+      const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+
+      // Zoom — fingers spreading/pinching
+      if (lastTouchDist !== null) {
         camControls.spherical.radius = Math.max(
           5,
           Math.min(80, camControls.spherical.radius - (dist - lastTouchDist) * 0.08)
         );
-        camControls.updateCamera();
       }
+
+      // Pan — midpoint of the two fingers moving
+      if (lastTouchMidX !== null) {
+        const pdx = midX - lastTouchMidX;
+        const pdy = midY - lastTouchMidY;
+        const right = new THREE.Vector3();
+        const dir = new THREE.Vector3();
+        camera.getWorldDirection(dir);
+        right.crossVectors(dir, camera.up).normalize();
+        camControls.target.addScaledVector(right, -pdx * 0.05);
+        camControls.target.y += pdy * 0.05;
+      }
+
       lastTouchDist = dist;
+      lastTouchMidX = midX;
+      lastTouchMidY = midY;
+      camControls.updateCamera();
     }
+
     e.preventDefault();
   }, { passive: false });
 
@@ -149,7 +187,7 @@ function initControls(canvas) {
 function setView(mode) {
   const s = camControls.spherical;
   switch (mode) {
-    case 'front': s.theta = 0; s.phi = Math.PI / 2; s.radius = 22; break;
+    case 'front': s.theta = 0; s.phi = Math.PI / 5; s.radius = 30; break;
     case 'side': s.theta = Math.PI / 2; s.phi = Math.PI / 5; s.radius = 30; break;
     case 'top': s.theta = 0; s.phi = 0.12; s.radius = 35; break;
     case 'reset': s.theta = 0.4; s.phi = Math.PI / 4; s.radius = 28; break;

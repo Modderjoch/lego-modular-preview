@@ -50,33 +50,29 @@ let uidCounter = 0;
 
 function buildPanel() {
   const panel = document.getElementById('panel');
+  const isMobile = () => window.innerWidth <= 640;
 
-  const categories = {
-    official: 'Official Modulars',
-    unofficial: 'Unofficial Modulars',
-    road: 'Road & Extras'
-  };
+  // Group modulars by category for desktop section labels
+  const grouped = {};
+  MODULARS.forEach((modular) => {
+    const cat = modular.category || 'Official';
+    if (!grouped[cat]) grouped[cat] = [];
+    grouped[cat].push(modular);
+  });
 
-  Object.entries(categories).forEach(([key, label]) => {
-    const items = MODULARS.filter(m => m.category === key);
-    if (!items.length) return;
+  Object.entries(grouped).forEach(([category, modulars]) => {
+    // Section label — hidden on mobile via CSS, visible on desktop
+    const label = document.createElement('div');
+    label.className = 'section-label panel-section-label';
+    label.textContent = category;
+    panel.appendChild(label);
 
-    const section = document.createElement('div');
-    section.className = 'panel-section';
-
-    const title = document.createElement('div');
-    title.className = 'section-label';
-    title.textContent = label;
-
-    section.appendChild(title);
-
-    items.forEach((modular) => {
+    modulars.forEach((modular) => {
       const btn = document.createElement('button');
       btn.className = 'building-btn';
       btn.setAttribute('aria-label', `Add ${modular.name}`);
 
       const thumbUrl = `models/${modular.category}/${modular.id}/thumbnail.jpg`;
-
       btn.innerHTML = `
         <div class="swatch">
           <img
@@ -91,12 +87,9 @@ function buildPanel() {
         </div>
         <div class="add-icon" aria-hidden="true">+</div>
       `;
-
       btn.addEventListener('click', () => addBuilding(modular.id));
-      section.appendChild(btn);
+      panel.appendChild(btn);
     });
-
-    panel.appendChild(section);
   });
 }
 
@@ -157,11 +150,20 @@ function wireUI() {
 // ─── Export ───────────────────────────────────────────────────────────────────
 
 function exportImage() {
-  // Three.js renders to a WebGL canvas — we need to capture it before the
-  // browser clears the buffer. Force a render then grab the image synchronously.
+  const canvas = document.getElementById('canvas3d');
+
+  const width = canvas.clientWidth;
+  const height = canvas.clientHeight;
+
+  // Sync renderer size with displayed size
+  renderer.setSize(width, height, false);
+
+  // Fix camera aspect ratio
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+
   renderer.render(scene, camera);
 
-  const canvas = document.getElementById('canvas3d');
   const dataUrl = canvas.toDataURL('image/png');
 
   const a = document.createElement('a');
@@ -199,7 +201,7 @@ function updateFloorControl() {
   controlEl.style.display = 'block';
 
   // "All floors" button
-  const allBtn = _makeFloorBtn('All stories', maxFloors, maxFloors, () => {
+  const allBtn = _makeFloorBtn('All floors', maxFloors, maxFloors, () => {
     _currentFloor = Infinity;
     setFloorClip(Infinity);
     _setActive(allBtn);
@@ -209,7 +211,7 @@ function updateFloorControl() {
   // Buttons from top floor down to ground only
   for (let f = maxFloors - 1; f >= 1; f--) {
     const floor = f;
-    const label = floor === 1 ? 'Ground story only' : `${floor} stories`;
+    const label = floor === 1 ? 'Ground floor only' : `${floor} floors`;
     const btn = _makeFloorBtn(label, floor, maxFloors, () => {
       _currentFloor = floor;
       setFloorClip(floor * FLOOR_H);

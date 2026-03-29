@@ -154,6 +154,13 @@
   padding: 6px 8px;
 }
 
+@media (max-width: 640px) {
+
+  .view-controls {
+    min-width: 50px;
+  }
+}
+
 .view-btn {
   display: flex;
   align-items: center;
@@ -182,17 +189,4 @@
   height: 1px;
   background: var(--border);
   margin: 2px 0;
-}
-
-/* Status badge */
-.model-status {
-  position: absolute;
-  bottom: 12px;
-  left: 12px;
-  padding: 3px 8px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  font-size: 10px;
-  color: var(--text-hint);
 }

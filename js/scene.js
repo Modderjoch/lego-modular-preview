@@ -10,31 +10,24 @@
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const FLOOR_H = 1.4;   // world-units per floor
-const GAP = 0.0;   // gap between buildings (0 = flush)
+const FLOOR_HEIGHT = 1.4;
+const GAP = 0.0;
 
-// Standard LEGO dimensions (mm):
-//   1 floor height = 96mm (3 bricks + plate)
-//   1 module width = 256mm (32 studs × 8mm)
-//
-// We scale every model so 96mm = FLOOR_H world units.
-// That means 1mm = FLOOR_H/96 world units, and one module width is always:
-//   256mm × (FLOOR_H / 96) world units — regardless of export scale.
-const MM_TO_WU = FLOOR_H / 82;          // millimetres → world units
-const MODULE_W = 256 * MM_TO_WU;        // one 32-stud module in world units
+const MM_TO_WU = FLOOR_HEIGHT / 82;
+const MODULE_WIDTH = 256 * MM_TO_WU;
 
 // ─── Scene globals ────────────────────────────────────────────────────────────
 
 let renderer, scene, camera;
 let gltfLoader;
 
-const buildingMeshes = new Map(); // index → THREE.Group
+const buildingMeshes = new Map();
 
 // Clipping plane for floor cutaway — cuts everything above this Y
 const clipPlane = new THREE.Plane(new THREE.Vector3(0, -1, 0), Infinity);
 
 // Model cache: modularId → THREE.Group (cloned per instance)
-// Each GLTF is loaded once; subsequent adds clone the cached group.
+// Each GLTF is loaded once; subsequent adds clone the cached group
 const modelCache = new Map();
 const loadingQueue = new Map(); // modularId → [callbacks] (dedupes parallel loads)
 
@@ -90,27 +83,16 @@ function _addEnvironment() {
 // ─── Lights ───────────────────────────────────────────────────────────────────
 
 function _addLights() {
-  // Very low ambient — just enough to lift the deepest shadows off pure black
   scene.add(new THREE.AmbientLight(0x221a0f, 0.8));
 
-  // Rim light — cool narrow light from behind/above to separate buildings
-  // from the dark background and give that studio product-shot edge
-  // const rim = new THREE.DirectionalLight(0xa0c8ff, .7);
-  // rim.position.set(-12, 20, -15);
-  // scene.add(rim);
-
-  // Subtle warm fill from below-front to soften harsh shadows on facades
   const fill = new THREE.DirectionalLight(0xffe0b0, 0.4);
   fill.position.set(0, -4, 20);
   scene.add(fill);
 }
 
-// ─── Background gradient ──────────────────────────────────────────────────────
+// ─── Radial background gradient ──────────────────────────────────────────────────────
 
 function _addBackgroundGradient() {
-  // Full-screen quad rendered behind everything — radial gradient from a
-  // warm dark centre to pure black at the edges, like a studio vignette.
-  // Uses an orthographic camera so it always fills the canvas exactly.
   const size = 512;
   const c = document.createElement('canvas');
   c.width = c.height = size;
@@ -120,7 +102,6 @@ function _addBackgroundGradient() {
     size / 2, size / 2, 0,
     size / 2, size / 2, size / 2
   );
-  // Many stops for a silky smooth transition — no visible banding
   grad.addColorStop(0.00, '#1a1a1a');
   grad.addColorStop(1.00, '#030302');
 
@@ -129,8 +110,6 @@ function _addBackgroundGradient() {
 
   const tex = new THREE.CanvasTexture(c);
 
-  // Render as a scene background texture — no geometry needed,
-  // Three.js renders it behind everything automatically.
   scene.background = tex;
 }
 
@@ -215,6 +194,18 @@ function _tryLoad(urls, modular, onLoaded) {
         if (!child.isMesh) return;
         child.castShadow = true;
         child.receiveShadow = true;
+
+        // Fix transparent materials rendering as black
+        const mats = Array.isArray(child.material) ? child.material : [child.material];
+        mats.forEach((mat) => {
+          if (mat.transparent || mat.alphaMap || mat.opacity < 1) {
+            mat.transparent = true;
+            mat.alphaTest = 0;
+            mat.depthWrite = false;
+            mat.side = THREE.DoubleSide;
+            mat.needsUpdate = true;
+          }
+        });
       });
 
       // Scale: use scaleOverride from data.js if set, otherwise derive from
@@ -230,11 +221,11 @@ function _tryLoad(urls, modular, onLoaded) {
         const expectedRawH = modular.floors * 96;
         scale = (expectedRawH * 0.7 < refH && refH < expectedRawH * 1.3)
           ? MM_TO_WU
-          : (modular.floors * FLOOR_H) / refH;
+          : (modular.floors * FLOOR_HEIGHT) / refH;
       }
 
       group.scale.setScalar(scale);
-      console.log(`[ModularStreet] ${modular.name} scale: ${scale.toFixed(5)}, module width: ${(MODULE_W * modular.widthU).toFixed(3)} wu`);
+      console.log(`[ModularStreet] ${modular.name} scale: ${scale.toFixed(5)}, module width: ${(MODULE_WIDTH * modular.widthU).toFixed(3)} wu`);
 
       // Lift to ground level
       const scaledBox = new THREE.Box3().setFromObject(group);
@@ -264,7 +255,7 @@ function _buildPlaceholder(modular) {
   const group = new THREE.Group();
   const w = modular.widthU * UNIT;
   const d = UNIT;
-  const h = modular.floors * FLOOR_H;
+  const h = modular.floors * FLOOR_HEIGHT;
 
   const mk = (color) => new THREE.MeshStandardMaterial({ color, roughness: 0.8, metalness: 0 });
 
@@ -280,7 +271,7 @@ function _buildPlaceholder(modular) {
 
   for (let f = 1; f < modular.floors; f++) {
     const stripe = new THREE.Mesh(new THREE.BoxGeometry(w, 0.1, d + 0.02), mk(modular.accent));
-    stripe.position.y = f * FLOOR_H;
+    stripe.position.y = f * FLOOR_HEIGHT;
     group.add(stripe);
   }
 
@@ -291,7 +282,7 @@ function _buildPlaceholder(modular) {
   for (let col = 0; col < cols; col++) {
     for (let row = 0; row < modular.floors; row++) {
       const wx = -w / 2 + (col + 0.5) * (w / cols);
-      const wy = FLOOR_H * row + FLOOR_H * 0.55;
+      const wy = FLOOR_HEIGHT * row + FLOOR_HEIGHT * 0.55;
       const z = d / 2 + 0.01;
       const frame = new THREE.Mesh(new THREE.BoxGeometry(0.48, 0.65, 0.04), frameMat);
       frame.position.set(wx, wy, z - 0.005);
@@ -357,7 +348,6 @@ function rebuildStreet(instances, camControls, onDone) {
     const modular = MODULARS.find((m) => m.id === inst.modularId);
     if (!modular) { loaded++; _place(); return; }
 
-    // loadBuilding returns from cache immediately if already loaded
     loadBuilding(modular, (group) => {
       groups[idx] = { group, modular };
       loaded++;
@@ -375,14 +365,8 @@ function rebuildStreet(instances, camControls, onDone) {
       const { group, modular: m } = entry;
       const inst = instances[idx];
 
-      // Snap width is always MODULE_W × widthU — fixed in world units,
-      // independent of how any individual model was exported or scaled.
-      const snapW = MODULE_W * m.widthU;
+      const snapW = MODULE_WIDTH * m.widthU;
 
-      // Place using the fixed physical footprint — no bounding box involved.
-      // Every modular is exactly 32 studs wide (MODULE_W world units) per widthU.
-      // The model origin in Blender should sit at the front-left corner of the
-      // baseplate; if it doesn't, fix it in Blender rather than measuring here.
       group.position.x = cursorX;
       group.position.z = 0;
 
@@ -392,11 +376,6 @@ function rebuildStreet(instances, camControls, onDone) {
       buildingMeshes.set(idx, group);
       cursorX += snapW;
     });
-
-    // Re-centre camera on the street midpoint
-    // camControls.target.set(cursorX / 2, FLOOR_H * 2, 0);
-    // camControls.spherical.radius = Math.max(20, cursorX * 1.2);
-    // camControls.updateCamera();
 
     if (onDone) onDone();
   }

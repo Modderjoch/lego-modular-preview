@@ -25,7 +25,6 @@ const MODULARS = [
     floors: 4,
     widthU: 1,
     category: 'official',
-    color: '#ffffff', accent: '#e8b86d', roofColor: '#8b6635',
   },
   {
     id: 'market-street',
@@ -35,7 +34,6 @@ const MODULARS = [
     floors: 4,
     widthU: 1,
     category: 'official',
-    color: '#ffffff', accent: '#e0c090', roofColor: '#806040',
   },
   {
     id: 'green-grocer',
@@ -45,7 +43,6 @@ const MODULARS = [
     floors: 4,
     widthU: 1,
     category: 'official',
-    color: '#ffffff', accent: '#7db860', roofColor: '#3d6030',
   },
   {
     id: 'fire-brigade',
@@ -56,7 +53,6 @@ const MODULARS = [
     widthU: 1,
     scaleOverride: 0.01707,
     category: 'official',
-    color: '#ffffff', accent: '#e05040', roofColor: '#8c2020',
   },
   {
     id: 'grand-emporium',
@@ -67,7 +63,6 @@ const MODULARS = [
     widthU: 1,
     scaleOverride: 0.01707,
     category: 'official',
-    color: '#ffffff', accent: '#d4c8a8', roofColor: '#a89870',
   },
   {
     id: 'pet-shop',
@@ -77,7 +72,6 @@ const MODULARS = [
     floors: 4,
     widthU: 1,
     category: 'official',
-    color: '#ffffff', accent: '#d4aa78', roofColor: '#806040',
   },
   {
     id: 'town-hall',
@@ -87,7 +81,6 @@ const MODULARS = [
     floors: 4,
     widthU: 1,
     category: 'official',
-    color: '#ffffff', accent: '#d4c8a0', roofColor: '#707060',
   },
   {
     id: 'palace-cinema',
@@ -97,7 +90,6 @@ const MODULARS = [
     floors: 4,
     widthU: 1,
     category: 'official',
-    color: '#ffffff', accent: '#e8d4a0', roofColor: '#c8b880',
   },
   {
     id: 'parisian-restaurant',
@@ -107,7 +99,6 @@ const MODULARS = [
     floors: 4,
     widthU: 1,
     category: 'official',
-    color: '#ffffff', accent: '#d8cca8', roofColor: '#888070',
   },
   {
     id: 'detective-office',
@@ -117,7 +108,6 @@ const MODULARS = [
     floors: 4,
     widthU: 1,
     category: 'official',
-    color: '#ffffff', accent: '#8898b8', roofColor: '#404e60',
   },
   {
     id: 'brick-bank',
@@ -128,7 +118,6 @@ const MODULARS = [
     widthU: 1,
     scaleOverride: 0.01707,
     category: 'official',
-    color: '#ffffff', accent: '#d4c898', roofColor: '#908060',
   },
   {
     id: 'assembly-square',
@@ -138,7 +127,6 @@ const MODULARS = [
     floors: 4,
     widthU: 1.5,
     category: 'official',
-    color: '#ffffff', accent: '#d4a840', roofColor: '#806020',
   },
   {
     id: 'downtown-diner',
@@ -149,7 +137,6 @@ const MODULARS = [
     widthU: 1,
     scaleOverride: 0.01707,
     category: 'official',
-    color: '#ffffff', accent: '#f0d860', roofColor: '#a08820',
   },
   {
     id: 'corner-garage',
@@ -159,7 +146,6 @@ const MODULARS = [
     floors: 4,
     widthU: 1,
     category: 'official',
-    color: '#ffffff', accent: '#b0a888', roofColor: '#686050',
   },
   {
     id: 'bookshop',
@@ -169,7 +155,6 @@ const MODULARS = [
     floors: 4,
     widthU: 1,
     category: 'official',
-    color: '#ffffff', accent: '#c08858', roofColor: '#704828',
   },
   {
     id: 'police-station',
@@ -179,7 +164,6 @@ const MODULARS = [
     floors: 4,
     widthU: 1,
     category: 'official',
-    color: '#ffffff', accent: '#c0b8a0', roofColor: '#606858',
   },
   {
     id: 'boutique-hotel',
@@ -189,7 +173,6 @@ const MODULARS = [
     floors: 4,
     widthU: 1,
     category: 'official',
-    color: '#ffffff', accent: '#d0b8e0', roofColor: '#785888',
   },
   {
     id: 'jazz-club',
@@ -199,7 +182,6 @@ const MODULARS = [
     floors: 4,
     widthU: 1,
     category: 'official',
-    color: '#ffffff', accent: '#506070', roofColor: '#202830',
   },
   {
     id: 'natural-history-museum',
@@ -209,7 +191,6 @@ const MODULARS = [
     floors: 4,
     widthU: 1.5,
     category: 'official',
-    color: '#ffffff', accent: '#d0c8b0', roofColor: '#a09080',
   },
   {
     id: 'tudor-corner',
@@ -219,7 +200,6 @@ const MODULARS = [
     floors: 4,
     widthU: 1,
     category: 'official',
-    color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
   {
     id: 'spring-lantern-festival',
@@ -230,7 +210,6 @@ const MODULARS = [
     widthU: 1.5,
     scaleOverride: 0.01707,
     category: 'unofficial',
-    color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
   {
     id: 'daily-bugle',
@@ -241,10 +220,9 @@ const MODULARS = [
     widthU: 1,
     scaleOverride: 0.01707,
     category: 'unofficial',
-    color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
   {
-    id: 'modular-lego-store',
+    id: 'lego-store',
     name: 'Modular LEGO Store',
     year: 2022,
     set: '910009',
@@ -252,7 +230,6 @@ const MODULARS = [
     widthU: 1,
     scaleOverride: 0.01707,
     category: 'unofficial',
-    color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
   {
     id: 'sanctum-sanctorum',
@@ -263,7 +240,6 @@ const MODULARS = [
     widthU: 1,
     scaleOverride: 0.01707,
     category: 'unofficial',
-    color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
   {
     id: 'venetian-houses',
@@ -274,7 +250,6 @@ const MODULARS = [
     widthU: 2,
     scaleOverride: 0.01707,
     category: 'unofficial',
-    color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
   {
     id: 'retro-bowling-alley',
@@ -285,7 +260,6 @@ const MODULARS = [
     widthU: 2,
     scaleOverride: 0.01707,
     category: 'unofficial',
-    color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
   {
     id: 'avengers-tower',
@@ -294,29 +268,30 @@ const MODULARS = [
     set: '76269',
     floors: 6,
     widthU: 1,
+    scaleOverride: 0.01707,
     category: 'unofficial',
-    color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
   {
-    id: 'modular-construction-site',
+    id: 'construction-site',
     name: 'Modular Construction Site',
     year: 2023,
     set: '910008',
     floors: 4,
     widthU: 1,
+    scaleOverride: 0.01707,
     category: 'unofficial',
-    color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
-  {
-    id: 'brick-cross-train-station',
-    name: 'Brick Cross',
-    year: 2024,
-    set: '910034',
-    floors: 2,
-    widthU: 1.5,
-    category: 'unofficial',
-    color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
-  },
+  // NO MECABRICKS MODEL AVAILABLE FOR NOW (March 2026)
+  // {
+  //   id: 'brick-cross-train-station',
+  //   name: 'Brick Cross',
+  //   year: 2024,
+  //   set: '910034',
+  //   floors: 2,
+  //   widthU: 1.5,
+  //   category: 'unofficial',
+  //   color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
+  // },
   {
     id: 'botanical-garden',
     name: 'Botanical Garden',
@@ -325,7 +300,6 @@ const MODULARS = [
     floors: 2,
     widthU: 2,
     category: 'unofficial',
-    color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
   {
     id: 'x-mansion',
@@ -333,9 +307,8 @@ const MODULARS = [
     year: 2024,
     set: '79294',
     floors: 3,
-    widthU: 2,
+    widthU: 1.5,
     category: 'unofficial',
-    color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
   {
     id: 'arkham-asylum',
@@ -345,7 +318,6 @@ const MODULARS = [
     floors: 3,
     widthU: 1,
     category: 'unofficial',
-    color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
   {
     id: 'straight-road',
@@ -356,7 +328,6 @@ const MODULARS = [
     widthU: 1,
     scaleOverride: 0.01707,
     category: 'road',
-    color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
   {
     id: 'cross-road',
@@ -367,7 +338,6 @@ const MODULARS = [
     widthU: 1,
     scaleOverride: 0.01707,
     category: 'road',
-    color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
   {
     id: 'curved-road',
@@ -378,7 +348,6 @@ const MODULARS = [
     widthU: 1,
     scaleOverride: 0.01707,
     category: 'road',
-    color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
   {
     id: 't-road',
@@ -389,6 +358,5 @@ const MODULARS = [
     widthU: 1,
     scaleOverride: 0.01707,
     category: 'road',
-    color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
 ];

@@ -45,7 +45,7 @@ let _activeCategory = null; // set to first category on buildPanel()
   window.onTrayRotate = rotateBuilding;
 
   startRenderLoop();
-  _loadFromUrl(); // restore layout from ?layout= param if present
+  setTimeout(_loadFromUrl, 0); // defer so scene is fully ready before restoring
 })();
 
 // ─── Panel ────────────────────────────────────────────────────────────────────
@@ -193,67 +193,8 @@ function syncStreet() {
 
 function wireUI() {
   document.getElementById('clear-btn').addEventListener('click', clearStreet);
-
   document.getElementById('export-btn').addEventListener('click', exportImage);
-
   document.getElementById('share-layout-btn').addEventListener('click', shareLayout);
-
-  document.getElementById('save-layout-btn').addEventListener('click', exportLayout);
-
-  document.getElementById('load-layout-input').addEventListener('change', (e) => {
-    importLayout(e.target.files[0]);
-    e.target.value = ''; // reset so the same file can be re-imported
-  });
-
-  document.getElementById('load-layout-btn').addEventListener('click', () => {
-    document.getElementById('load-layout-input').click();
-  });
-}
-
-// ─── Layout save / load ───────────────────────────────────────────────────────
-
-function exportLayout() {
-  const payload = {
-    version: 1,
-    savedAt: new Date().toISOString(),
-    instances: streetInstances.map(({ modularId, rotation }) => ({ modularId, rotation: rotation || 0 })),
-  };
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'modular-street.json';
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
-
-function importLayout(file) {
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    try {
-      const payload = JSON.parse(e.target.result);
-      const raw = Array.isArray(payload) ? payload : payload.instances;
-      if (!Array.isArray(raw)) throw new Error('Invalid format');
-
-      // Validate each entry refers to a known modular
-      const valid = raw.filter(({ modularId }) => MODULARS.some((m) => m.id === modularId));
-      if (valid.length === 0) throw new Error('No recognised buildings found');
-
-      streetInstances = valid.map(({ modularId, rotation }) => ({
-        uid: 'b' + (++uidCounter),
-        modularId,
-        rotation: rotation || 0,
-      }));
-
-      syncStreet();
-      if (streetInstances.length > 0) {
-        document.getElementById('viewport-hint').style.opacity = '0';
-      }
-    } catch (err) {
-      alert('Could not load layout: ' + err.message);
-    }
-  };
-  reader.readAsText(file);
 }
 
 // ─── Layout share via URL ─────────────────────────────────────────────────────
@@ -275,7 +216,7 @@ function shareLayout() {
   if (navigator.share) {
     navigator.share({
       title: 'My Modular LEGO® Street',
-      text: 'Check out my LEGO Modular street!',
+      text: 'Check out my LEGO® modular street!',
       url,
     }).catch(() => { }); // user cancelled — ignore
     return;

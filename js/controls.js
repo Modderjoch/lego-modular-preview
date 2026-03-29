@@ -187,7 +187,7 @@ function initControls(canvas) {
 function setView(mode) {
   const s = camControls.spherical;
   switch (mode) {
-    case 'front': s.theta = 0; s.phi = Math.PI / 5; s.radius = 30; break;
+    case 'front': s.theta = 0; s.phi = Math.PI / 2; s.radius = 30; break;
     case 'side': s.theta = Math.PI / 2; s.phi = Math.PI / 5; s.radius = 30; break;
     case 'top': s.theta = 0; s.phi = 0.12; s.radius = 35; break;
     case 'reset': s.theta = 0.4; s.phi = Math.PI / 4; s.radius = 28; break;

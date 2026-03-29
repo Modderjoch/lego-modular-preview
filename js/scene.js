@@ -127,6 +127,34 @@ function _handleResize() {
 
 // ─── Building loading ─────────────────────────────────────────────────────────
 
+function addBuildingToScene(inst, index) {
+  const modular = MODULARS.find((m) => m.id === inst.modularId);
+  if (!modular) return;
+
+  _showLoader();
+
+  loadBuilding(modular, (group) => {
+    const snapW = MODULE_WIDTH * modular.widthU;
+
+    // Compute X based on previous buildings
+    let cursorX = 0;
+    for (let i = 0; i < index; i++) {
+      const prev = MODULARS.find((m) => m.id === streetInstances[i].modularId);
+      if (prev) cursorX += MODULE_WIDTH * prev.widthU;
+    }
+
+    group.position.x = cursorX;
+    group.position.z = 0;
+    group.rotation.y = (inst.rotation || 0) * Math.PI / 180;
+
+    scene.add(group);
+    buildingMeshes.set(inst.uid, group);
+
+    _updateLoaderProgress(1, 1);
+    _hideLoader();
+  });
+}
+
 function loadBuilding(modular, onLoaded) {
   // Return a deep clone from cache if already loaded — instant, no network hit
   if (modelCache.has(modular.id)) {
@@ -179,6 +207,8 @@ function _tryLoad(urls, modular, onLoaded) {
   const remainingUrls = urls.slice(1);
 
   console.log(`[ModularStreet] Loading: ${url}`);
+
+  _showLoader(modular.name);
 
   gltfLoader.load(
     url,

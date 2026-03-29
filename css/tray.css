@@ -1,7 +1,3 @@
-/* ─────────────────────────────────────────
-   tray.css — bottom street strip
-───────────────────────────────────────── */
-
 #tray {
   grid-column: 1 / -1;
   display: flex;
@@ -12,7 +8,6 @@
   border-top: 1px solid var(--border);
 }
 
-/* Header row */
 .tray-header {
   display: flex;
   align-items: center;
@@ -48,7 +43,6 @@
   color: var(--accent);
 }
 
-/* Slot strip */
 #tray-slots {
   display: flex;
   gap: 6px;
@@ -67,7 +61,6 @@
   border-radius: 2px;
 }
 
-/* Individual slot */
 .tray-slot {
   position: relative;
   flex-shrink: 0;
@@ -140,7 +133,6 @@
   opacity: 1;
 }
 
-/* Rotate button */
 .tray-slot .rotate-slot {
   position: absolute;
   bottom: 20px;

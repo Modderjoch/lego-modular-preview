@@ -98,7 +98,10 @@ function buildPanel() {
 function addBuilding(modularId) {
   const uid = 'b' + (++uidCounter);
   streetInstances.push({ uid, modularId, rotation: 0 });
-  syncStreet();
+  renderTray(streetInstances);
+  updateFloorControl();
+  addBuildingToScene(streetInstances[streetInstances.length - 1], streetInstances.length - 1);
+  document.getElementById('viewport-hint').style.opacity = '0';
 }
 
 function rotateBuilding(uid) {
@@ -125,6 +128,7 @@ function reorderBuilding(srcUid, dstUid) {
 function clearStreet() {
   streetInstances = [];
   syncStreet();
+  document.getElementById('viewport-hint').style.opacity = '1';
 }
 
 // ─── Sync ─────────────────────────────────────────────────────────────────────
@@ -214,7 +218,7 @@ function updateFloorControl() {
     const label = floor === 1 ? 'Ground floor only' : `${floor} floors`;
     const btn = _makeFloorBtn(label, floor, maxFloors, () => {
       _currentFloor = floor;
-      setFloorClip(floor * FLOOR_H);
+      setFloorClip(floor * FLOOR_HEIGHT);
       _setActive(btn);
     });
     btnsEl.appendChild(btn);
@@ -228,7 +232,7 @@ function updateFloorControl() {
   if (clampedFloor === Infinity) {
     _setActive(allBtn);
   } else {
-    setFloorClip(clampedFloor * FLOOR_H);
+    setFloorClip(clampedFloor * FLOOR_HEIGHT);
     const btns = Array.from(btnsEl.querySelectorAll('.floor-step'));
     // allBtn = index 0, then maxFloors-1, maxFloors-2 ... 1
     const targetIdx = maxFloors - clampedFloor;

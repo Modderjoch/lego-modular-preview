@@ -203,3 +203,25 @@ function _touchDist(e) {
     e.touches[0].clientY - e.touches[1].clientY
   );
 }
+
+function _showLoader(modularName = '') {
+  const loader = document.getElementById('loader');
+  if (!loader) return;
+  loader.classList.remove('hidden');
+  const text = document.getElementById('loader-text');
+  if (text) text.textContent = `Building ${modularName}`;
+  _updateLoaderProgress(0, 1);
+}
+
+function _updateLoaderProgress(done, total) {
+  const bar = document.querySelector('#loader .bar');
+  const percent = document.getElementById('loader-percent');
+  if (!bar || !percent) return;
+  const p = Math.round((done / total) * 100);
+  bar.style.width = `${p}%`;
+  percent.textContent = `${p}%`;
+}
+
+function _hideLoader() {
+  document.getElementById('loader')?.classList.add('hidden');
+}

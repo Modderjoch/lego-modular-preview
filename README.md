@@ -30,8 +30,8 @@ The Stories control lets you clip the scene at any floor level — handy for ins
 ### 📷 Screenshot export
 Download the current 3D view as a PNG with one click.
 
-### 💾 Save & load layouts
-Export your street as a small JSON file and reload it later — or share it with someone else. The file only stores set IDs and rotations, so it's tiny and human-readable.
+### 🔗 Share layouts
+Share your street with someone else, or save it for later. The link only stores set IDs and rotations.
 
 ### 📱 Mobile-friendly
 The interface adapts for smaller screens: the building panel becomes a horizontally scrollable strip, camera controls move to a swipeable bottom bar, and touch gestures handle orbit, pinch-zoom, and two-finger pan.

@@ -150,7 +150,6 @@ function addBuildingToScene(inst, index) {
     scene.add(group);
     buildingMeshes.set(inst.uid, group);
 
-    _updateLoaderProgress(1, 1);
     _hideLoader();
   });
 }

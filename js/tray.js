@@ -177,7 +177,6 @@ function _createSlot(inst, modular) {
 function _touchBeginDrag(el, touch) {
   const rect = el.getBoundingClientRect();
 
-  // Create a ghost clone that floats under the finger
   const ghost = el.cloneNode(true);
   ghost.style.cssText = `
     position: fixed;

@@ -6,10 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LEGO Modular Previewer</title>
 
-  <!-- Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" />
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-  <!-- Styles -->
   <link rel="stylesheet" href="css/reset.css" />
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/panel.css" />
@@ -20,7 +18,6 @@
 <body>
   <div id="app">
 
-    <!-- Header -->
     <header id="header">
       <div class="logo-dot"></div>
       <h1>Modular Street</h1>
@@ -29,11 +26,9 @@
       <span class="hint">Drag to orbit · Scroll to zoom · Right-drag to pan</span>
     </header>
 
-    <!-- Left panel — building list populated by JS -->
     <aside id="panel">
     </aside>
 
-    <!-- 3D Viewport -->
     <main id="viewport">
       <canvas id="canvas3d"></canvas>
 
@@ -46,10 +41,6 @@
       <div id="loader" class="hidden">
         <div class="loader-content">
           <span id="loader-text">Building …</span>
-          <span id="loader-percent">0%</span>
-          <div class="bar-bg">
-            <div class="bar"></div>
-          </div>
         </div>
       </div>
 
@@ -73,7 +64,6 @@
       </div>
     </main>
 
-    <!-- Street tray -->
     <footer id="tray">
       <div class="tray-header">
         <span class="tray-label">Your Street</span>
@@ -96,12 +86,10 @@
     </footer>
   </div>
 
-  <!-- Three.js r148 — last version with reliable UMD addon files on CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/environments/RoomEnvironment.js"></script>
 
-  <!-- App modules (order matters) -->
   <script src="js/data.js"></script>
   <script src="js/scene.js"></script>
   <script src="js/controls.js"></script>

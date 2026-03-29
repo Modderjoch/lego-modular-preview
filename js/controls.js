@@ -204,24 +204,26 @@ function _touchDist(e) {
   );
 }
 
+let _loaderInterval;
+
 function _showLoader(modularName = '') {
   const loader = document.getElementById('loader');
   if (!loader) return;
   loader.classList.remove('hidden');
-  const text = document.getElementById('loader-text');
-  if (text) text.textContent = `Building ${modularName}`;
-  _updateLoaderProgress(0, 1);
-}
 
-function _updateLoaderProgress(done, total) {
-  const bar = document.querySelector('#loader .bar');
-  const percent = document.getElementById('loader-percent');
-  if (!bar || !percent) return;
-  const p = Math.round((done / total) * 100);
-  bar.style.width = `${p}%`;
-  percent.textContent = `${p}%`;
+  const text = document.getElementById('loader-text');
+  if (!text) return;
+
+  let dotCount = 0;
+  text.textContent = `Building ${modularName}`;
+
+  _loaderInterval = setInterval(() => {
+    dotCount = (dotCount % 3) + 1;
+    text.textContent = `Building ${modularName}${'.'.repeat(dotCount)}`;
+  }, 500);
 }
 
 function _hideLoader() {
   document.getElementById('loader')?.classList.add('hidden');
+  clearInterval(_loaderInterval);
 }

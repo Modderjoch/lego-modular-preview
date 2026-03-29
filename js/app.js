@@ -51,29 +51,52 @@ let uidCounter = 0;
 function buildPanel() {
   const panel = document.getElementById('panel');
 
-  MODULARS.forEach((modular) => {
-    const btn = document.createElement('button');
-    btn.className = 'building-btn';
-    btn.setAttribute('aria-label', `Add ${modular.name}`);
+  const categories = {
+    official: 'Official Modulars',
+    unofficial: 'Unofficial Builds',
+    road: 'Road & Extras'
+  };
 
-    // Try thumbnail.png from the model's folder; fall back to colour swatch
-    const thumbUrl = `models/${modular.id}/thumbnail.jpg`;
-    btn.innerHTML = `
-      <div class="swatch">
-        <img
-          src="${thumbUrl}"
-          alt="${modular.name}"
-          onerror="this.style.display='none'; this.parentElement.style.background='${modular.color}';"
-        />
-      </div>
-      <div class="info">
-        <div class="name">${modular.name}</div>
-        <div class="meta">${modular.set} · ${modular.year}</div>
-      </div>
-      <div class="add-icon" aria-hidden="true">+</div>
-    `;
-    btn.addEventListener('click', () => addBuilding(modular.id));
-    panel.appendChild(btn);
+  Object.entries(categories).forEach(([key, label]) => {
+    const items = MODULARS.filter(m => m.category === key);
+    if (!items.length) return;
+
+    const section = document.createElement('div');
+    section.className = 'panel-section';
+
+    const title = document.createElement('div');
+    title.className = 'section-label';
+    title.textContent = label;
+
+    section.appendChild(title);
+
+    items.forEach((modular) => {
+      const btn = document.createElement('button');
+      btn.className = 'building-btn';
+      btn.setAttribute('aria-label', `Add ${modular.name}`);
+
+      const thumbUrl = `models/${modular.category}/${modular.id}/thumbnail.jpg`;
+
+      btn.innerHTML = `
+        <div class="swatch">
+          <img
+            src="${thumbUrl}"
+            alt="${modular.name}"
+            onerror="this.style.display='none'; this.parentElement.style.background='${modular.color}';"
+          />
+        </div>
+        <div class="info">
+          <div class="name">${modular.name}</div>
+          <div class="meta">${modular.set} · ${modular.year}</div>
+        </div>
+        <div class="add-icon" aria-hidden="true">+</div>
+      `;
+
+      btn.addEventListener('click', () => addBuilding(modular.id));
+      section.appendChild(btn);
+    });
+
+    panel.appendChild(section);
   });
 }
 

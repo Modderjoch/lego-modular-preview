@@ -46,7 +46,8 @@ function _createSlot(inst, modular) {
   el.draggable = true;
   el.dataset.uid = inst.uid;
 
-  const thumbUrl = `models/${modular.id}/thumbnail.jpg`;
+  const basePath = `models/${modular.category}/${modular.id}`;
+  const thumbUrl = `${basePath}/thumbnail.jpg`;
   const rotLabel = inst.rotation ? `${inst.rotation}°` : '↻';
   el.innerHTML = `
     <div class="slot-thumb" style="background: ${modular.color};">

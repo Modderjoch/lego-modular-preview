@@ -170,8 +170,9 @@ function loadBuilding(modular, onLoaded) {
   //   1. models/cafe-corner/cafe-corner.gltf  (subfolder GLTF — preferred)
   //   2. models/cafe-corner/cafe-corner.glb   (subfolder GLB)
   //   3. models/cafe-corner.glb               (root GLB — legacy fallback)
-  const gltfUrl = `models/${modular.id}/${modular.id}.gltf`;
-  const glbSubUrl = `models/${modular.id}/${modular.id}.glb`;
+  const basePath = `models/${modular.category}/${modular.id}`;
+  const gltfUrl = `${basePath}/${modular.id}.gltf`;
+  const glbSubUrl = `${basePath}/${modular.id}.glb`;
   const glbRootUrl = `models/${modular.id}.glb`;
 
   _tryLoad([gltfUrl, glbSubUrl, glbRootUrl], modular, (group) => {

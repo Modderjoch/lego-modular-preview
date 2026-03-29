@@ -24,6 +24,7 @@ const MODULARS = [
     set: '10182',
     floors: 4,
     widthU: 1,
+    category: 'official',
     color: '#ffffff', accent: '#e8b86d', roofColor: '#8b6635',
   },
   {
@@ -33,6 +34,7 @@ const MODULARS = [
     set: '10190',
     floors: 4,
     widthU: 1,
+    category: 'official',
     color: '#ffffff', accent: '#e0c090', roofColor: '#806040',
   },
   {
@@ -42,6 +44,7 @@ const MODULARS = [
     set: '10185',
     floors: 4,
     widthU: 1,
+    category: 'official',
     color: '#ffffff', accent: '#7db860', roofColor: '#3d6030',
   },
   {
@@ -52,6 +55,7 @@ const MODULARS = [
     floors: 4,
     widthU: 1,
     scaleOverride: 0.01707,
+    category: 'official',
     color: '#ffffff', accent: '#e05040', roofColor: '#8c2020',
   },
   {
@@ -62,6 +66,7 @@ const MODULARS = [
     floors: 4,
     widthU: 1,
     scaleOverride: 0.01707,
+    category: 'official',
     color: '#ffffff', accent: '#d4c8a8', roofColor: '#a89870',
   },
   {
@@ -71,6 +76,7 @@ const MODULARS = [
     set: '10218',
     floors: 4,
     widthU: 1,
+    category: 'official',
     color: '#ffffff', accent: '#d4aa78', roofColor: '#806040',
   },
   {
@@ -80,6 +86,7 @@ const MODULARS = [
     set: '10224',
     floors: 4,
     widthU: 1,
+    category: 'official',
     color: '#ffffff', accent: '#d4c8a0', roofColor: '#707060',
   },
   {
@@ -89,6 +96,7 @@ const MODULARS = [
     set: '10232',
     floors: 4,
     widthU: 1,
+    category: 'official',
     color: '#ffffff', accent: '#e8d4a0', roofColor: '#c8b880',
   },
   {
@@ -98,6 +106,7 @@ const MODULARS = [
     set: '10243',
     floors: 4,
     widthU: 1,
+    category: 'official',
     color: '#ffffff', accent: '#d8cca8', roofColor: '#888070',
   },
   {
@@ -107,6 +116,7 @@ const MODULARS = [
     set: '10246',
     floors: 4,
     widthU: 1,
+    category: 'official',
     color: '#ffffff', accent: '#8898b8', roofColor: '#404e60',
   },
   {
@@ -117,6 +127,7 @@ const MODULARS = [
     floors: 4,
     widthU: 1,
     scaleOverride: 0.01707,
+    category: 'official',
     color: '#ffffff', accent: '#d4c898', roofColor: '#908060',
   },
   {
@@ -126,6 +137,7 @@ const MODULARS = [
     set: '10255',
     floors: 4,
     widthU: 1.5,
+    category: 'official',
     color: '#ffffff', accent: '#d4a840', roofColor: '#806020',
   },
   {
@@ -136,6 +148,7 @@ const MODULARS = [
     floors: 4,
     widthU: 1,
     scaleOverride: 0.01707,
+    category: 'official',
     color: '#ffffff', accent: '#f0d860', roofColor: '#a08820',
   },
   {
@@ -145,6 +158,7 @@ const MODULARS = [
     set: '10264',
     floors: 4,
     widthU: 1,
+    category: 'official',
     color: '#ffffff', accent: '#b0a888', roofColor: '#686050',
   },
   {
@@ -154,6 +168,7 @@ const MODULARS = [
     set: '10270',
     floors: 4,
     widthU: 1,
+    category: 'official',
     color: '#ffffff', accent: '#c08858', roofColor: '#704828',
   },
   {
@@ -163,6 +178,7 @@ const MODULARS = [
     set: '10278',
     floors: 4,
     widthU: 1,
+    category: 'official',
     color: '#ffffff', accent: '#c0b8a0', roofColor: '#606858',
   },
   {
@@ -172,6 +188,7 @@ const MODULARS = [
     set: '10297',
     floors: 4,
     widthU: 1,
+    category: 'official',
     color: '#ffffff', accent: '#d0b8e0', roofColor: '#785888',
   },
   {
@@ -181,6 +198,7 @@ const MODULARS = [
     set: '10312',
     floors: 4,
     widthU: 1,
+    category: 'official',
     color: '#ffffff', accent: '#506070', roofColor: '#202830',
   },
   {
@@ -190,6 +208,7 @@ const MODULARS = [
     set: '10326',
     floors: 4,
     widthU: 1.5,
+    category: 'official',
     color: '#ffffff', accent: '#d0c8b0', roofColor: '#a09080',
   },
   {
@@ -199,8 +218,41 @@ const MODULARS = [
     set: '10350',
     floors: 4,
     widthU: 1,
+    category: 'official',
     color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
+  {
+    id: 'retro-bowling-alley',
+    name: 'Retro Bowling Alley',
+    year: 2022,
+    set: '910013',
+    floors: 1,
+    widthU: 2,
+    scaleOverride: 0.01707,
+    category: 'unofficial',
+    color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
+  },
+  {
+    id: 'botanical-garden',
+    name: 'Botanical Garden',
+    year: 2024,
+    set: '21353',
+    floors: 2,
+    widthU: 2,
+    category: 'unofficial',
+    color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
+  },
+  // {
+  //   id: 'retro-bowling-alley',
+  //   name: 'Retro Bowling Alley',
+  //   year: 2021,
+  //   set: '80107',
+  //   floors: 1,
+  //   widthU: 1,
+  //   scaleOverride: 0.01707,
+  //   category: 'unofficial',
+  //   color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
+  // },
   {
     id: 'straight-road',
     name: 'Straight Road',
@@ -209,6 +261,7 @@ const MODULARS = [
     floors: 1,
     widthU: 1,
     scaleOverride: 0.01707,
+    category: 'road',
     color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
   {
@@ -219,6 +272,7 @@ const MODULARS = [
     floors: 1,
     widthU: 1,
     scaleOverride: 0.01707,
+    category: 'road',
     color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
   {
@@ -229,6 +283,7 @@ const MODULARS = [
     floors: 1,
     widthU: 1,
     scaleOverride: 0.01707,
+    category: 'road',
     color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
   {
@@ -239,6 +294,7 @@ const MODULARS = [
     floors: 1,
     widthU: 1,
     scaleOverride: 0.01707,
+    category: 'road',
     color: '#ffffff', accent: '#d4c0a0', roofColor: '#503820',
   },
 ];

@@ -70,10 +70,10 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":37549,
+			"count":98945,
 			"max":[
 				127.95999908447266,
-				1.8000094890594482,
+				3.1800060272216797,
 				127.95999908447266
 			],
 			"min":[
@@ -86,45 +86,45 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":37549,
+			"count":98945,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":37549,
+			"count":98945,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
-			"componentType":5123,
-			"count":72420,
+			"componentType":5125,
+			"count":239940,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":450588,
+			"byteLength":1187340,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":450588,
-			"byteOffset":450588,
+			"byteLength":1187340,
+			"byteOffset":1187340,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":300392,
-			"byteOffset":901176,
+			"byteLength":791560,
+			"byteOffset":2374680,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":144840,
-			"byteOffset":1201568,
+			"byteLength":959760,
+			"byteOffset":3166240,
 			"target":34963
 		}
 	],
@@ -136,7 +136,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":1346408,
+			"byteLength":4126000,
 			"uri":"curved-road.bin"
 		}
 	]

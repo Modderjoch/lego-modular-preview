@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LEGO® Modular Previewer</title>
+  <title>Modular LEGO® Previewer</title>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" />
   <link rel="icon" type="image/x-icon" href="/images/favicon.png">
@@ -50,7 +50,7 @@
 
       <div class="view-controls-wrap">
         <div class="view-controls">
-          <div class="floor-control-label">View</div>
+          <div class="floor-control-label">Camera</div>
           <button class="view-btn" title="Front view" data-view="front">Front</button>
           <button class="view-btn" title="Side view" data-view="side">Side</button>
           <button class="view-btn" title="Top view" data-view="top">Top</button>
@@ -58,10 +58,12 @@
           <div class="view-btn-divider"></div>
           <button class="view-btn view-btn--action" title="Download screenshot as PNG" id="export-btn">📷
             Screenshot</button>
+          <button class="view-btn view-btn--action" title="Share layout as link" id="share-layout-btn">🔗 Share
+            layout</button>
           <button class="view-btn view-btn--action" title="Save layout as JSON file" id="save-layout-btn">💾 Save
-            configuration</button>
+            layout</button>
           <button class="view-btn view-btn--action" title="Load a saved layout JSON" id="load-layout-btn">📂 Load
-            configuration</button>
+            layout</button>
           <input type="file" id="load-layout-input" accept=".json" style="display:none;" />
         </div>
       </div>

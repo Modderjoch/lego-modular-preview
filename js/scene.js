@@ -357,10 +357,16 @@ function setFloorClip(y) {
  * trigger a network load. This means adding a second building never reloads
  * the first, and adding the same modular twice only fetches it once.
  */
+let _rebuildGeneration = 0;
+
 function rebuildStreet(instances, camControls, onDone) {
   // Remove all current meshes from scene (but keep them in memory)
   buildingMeshes.forEach((mesh) => scene.remove(mesh));
   buildingMeshes.clear();
+
+  // Increment generation so any in-flight callbacks from a previous
+  // rebuild know they are stale and should not touch the scene.
+  const generation = ++_rebuildGeneration;
 
   if (instances.length === 0) {
     document.getElementById('viewport-hint').style.opacity = '1';
@@ -378,6 +384,7 @@ function rebuildStreet(instances, camControls, onDone) {
     if (!modular) { loaded++; _place(); return; }
 
     loadBuilding(modular, (group) => {
+      if (generation !== _rebuildGeneration) return; // stale — discard
       groups[idx] = { group, modular };
       loaded++;
       _place();
@@ -386,6 +393,7 @@ function rebuildStreet(instances, camControls, onDone) {
 
   function _place() {
     if (loaded < instances.length) return;
+    if (generation !== _rebuildGeneration) return; // stale — discard
 
     let cursorX = 0;
 

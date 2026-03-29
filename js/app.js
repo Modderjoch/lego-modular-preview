@@ -45,6 +45,7 @@ let _activeCategory = null; // set to first category on buildPanel()
   window.onTrayRotate = rotateBuilding;
 
   startRenderLoop();
+  setTimeout(_loadFromUrl, 0); // defer so scene is fully ready before restoring
 })();
 
 // ─── Panel ────────────────────────────────────────────────────────────────────
@@ -192,68 +193,98 @@ function syncStreet() {
 
 function wireUI() {
   document.getElementById('clear-btn').addEventListener('click', clearStreet);
-
   document.getElementById('export-btn').addEventListener('click', exportImage);
+  document.getElementById('share-layout-btn').addEventListener('click', shareLayout);
+}
 
-  document.getElementById('save-layout-btn').addEventListener('click', exportLayout);
+// ─── Layout share via URL ─────────────────────────────────────────────────────
 
-  document.getElementById('load-layout-input').addEventListener('change', (e) => {
-    importLayout(e.target.files[0]);
-    e.target.value = ''; // reset so the same file can be re-imported
+/**
+ * Encode the current street into a URL parameter and share it.
+ * On mobile, opens the native share sheet. On desktop, copies to clipboard.
+ */
+function shareLayout() {
+  if (streetInstances.length === 0) {
+    alert('Add some buildings first!');
+    return;
+  }
+
+  const url = _layoutToUrl();
+  const btn = document.getElementById('share-layout-btn');
+
+  // Mobile: native share sheet
+  if (navigator.share) {
+    navigator.share({
+      title: 'My Modular LEGO® Street',
+      text: 'Check out my LEGO® modular street!',
+      url,
+    }).catch(() => { }); // user cancelled — ignore
+    return;
+  }
+
+  // Desktop: copy to clipboard
+  navigator.clipboard.writeText(url).then(() => {
+    const original = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => { btn.textContent = original; }, 2000);
+  }).catch(() => {
+    // Clipboard API unavailable — prompt as fallback
+    window.prompt('Copy this link:', url);
   });
-
-  document.getElementById('load-layout-btn').addEventListener('click', () => {
-    document.getElementById('load-layout-input').click();
-  });
 }
 
-// ─── Layout save / load ───────────────────────────────────────────────────────
-
-function exportLayout() {
-  const payload = {
-    version: 1,
-    savedAt: new Date().toISOString(),
-    instances: streetInstances.map(({ modularId, rotation }) => ({ modularId, rotation: rotation || 0 })),
-  };
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'modular-street.json';
-  a.click();
-  URL.revokeObjectURL(a.href);
+/**
+ * Serialise streetInstances to a Base64 URL parameter.
+ * Format: ?layout=<base64(JSON)>
+ * Only stores modularId + rotation — tiny and human-debuggable when decoded.
+ */
+function _layoutToUrl() {
+  const data = streetInstances.map(({ modularId, rotation }) => ({
+    modularId,
+    rotation: rotation || 0,
+  }));
+  const json = JSON.stringify(data);
+  const b64 = btoa(unescape(encodeURIComponent(json)));
+  const url = new URL(window.location.href);
+  url.search = ''; // clear any existing params
+  url.searchParams.set('layout', b64);
+  return url.toString();
 }
 
-function importLayout(file) {
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    try {
-      const payload = JSON.parse(e.target.result);
-      const raw = Array.isArray(payload) ? payload : payload.instances;
-      if (!Array.isArray(raw)) throw new Error('Invalid format');
+/**
+ * On page load, check for a ?layout= parameter and restore the street from it.
+ * Called at the end of init(), after the scene is ready.
+ */
+function _loadFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const b64 = params.get('layout');
+  if (!b64) return;
 
-      // Validate each entry refers to a known modular
-      const valid = raw.filter(({ modularId }) => MODULARS.some((m) => m.id === modularId));
-      if (valid.length === 0) throw new Error('No recognised buildings found');
+  try {
+    const json = decodeURIComponent(escape(atob(b64)));
+    const raw = JSON.parse(json);
+    if (!Array.isArray(raw)) return;
 
-      streetInstances = valid.map(({ modularId, rotation }) => ({
-        uid: 'b' + (++uidCounter),
-        modularId,
-        rotation: rotation || 0,
-      }));
+    const valid = raw.filter(({ modularId }) => MODULARS.some((m) => m.id === modularId));
+    if (valid.length === 0) return;
 
-      syncStreet();
-      if (streetInstances.length > 0) {
-        document.getElementById('viewport-hint').style.opacity = '0';
-      }
-    } catch (err) {
-      alert('Could not load layout: ' + err.message);
-    }
-  };
-  reader.readAsText(file);
+    streetInstances = valid.map(({ modularId, rotation }) => ({
+      uid: 'b' + (++uidCounter),
+      modularId,
+      rotation: rotation || 0,
+    }));
+
+    syncStreet();
+    document.getElementById('viewport-hint').style.opacity = '0';
+
+    // Clean the URL so reloading doesn't re-trigger the import
+    const clean = new URL(window.location.href);
+    clean.searchParams.delete('layout');
+    window.history.replaceState({}, '', clean.toString());
+  } catch (e) {
+    console.warn('[ModularStreet] Could not restore layout from URL:', e);
+  }
 }
-
-// ─── Image export ─────────────────────────────────────────────────────────────
 
 function exportImage() {
   const canvas = document.getElementById('canvas3d');

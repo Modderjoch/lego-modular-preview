@@ -215,7 +215,6 @@ function _showLoader(modularName = '') {
   if (!text) return;
 
   let dotCount = 0;
-  text.textContent = `Building ${modularName}`;
 
   _loaderInterval = setInterval(() => {
     dotCount = (dotCount % 3) + 1;

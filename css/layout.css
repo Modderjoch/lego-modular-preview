@@ -1,0 +1,53 @@
+/* ─────────────────────────────────────────
+   layout.css — app grid + header
+───────────────────────────────────────── */
+
+/* App grid */
+#app {
+  display: grid;
+  grid-template-columns: var(--panel-w) 1fr;
+  grid-template-rows: 48px 1fr var(--tray-h);
+  height: 100vh;
+}
+
+/* Header */
+#header {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+#header .logo-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+#header h1 {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+#header .sub {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-hint);
+  margin-left: 2px;
+}
+
+#header .spacer {
+  flex: 1;
+}
+
+#header .hint {
+  font-size: 11px;
+  color: var(--text-hint);
+}

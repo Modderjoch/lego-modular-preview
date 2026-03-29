@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modular Street — LEGO Modular Preview</title>
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/panel.css" />
+  <link rel="stylesheet" href="css/viewport.css" />
+  <link rel="stylesheet" href="css/tray.css" />
+</head>
+
+<body>
+  <div id="app">
+
+    <!-- Header -->
+    <header id="header">
+      <div class="logo-dot"></div>
+      <h1>Modular Street</h1>
+      <span class="sub">LEGO Modular Preview</span>
+      <div class="spacer"></div>
+      <span class="hint">Drag to orbit · Scroll to zoom · Right-drag to pan</span>
+    </header>
+
+    <!-- Left panel — building list populated by JS -->
+    <aside id="panel">
+
+      <!-- Floor cutoff — shown once buildings are placed -->
+      <div class="floor-control" id="floor-control" style="display:none;">
+        <div class="section-label" style="margin-top:12px;">Floors visible</div>
+        <div class="floor-btns" id="floor-btns"></div>
+      </div>
+      <div class="section-label">Modular Buildings</div>
+    </aside>
+
+    <!-- 3D Viewport -->
+    <main id="viewport">
+      <canvas id="canvas3d"></canvas>
+
+      <div class="viewport-hint" id="viewport-hint">
+        <div class="icon">🏙️</div>
+        <p>Select buildings from the left panel</p>
+        <p class="sub-hint">They'll snap together on the street below</p>
+      </div>
+
+      <div class="view-controls">
+        <button class="view-btn" title="Front view" data-view="front">F</button>
+        <button class="view-btn" title="Side view" data-view="side">S</button>
+        <button class="view-btn" title="Top view" data-view="top">T</button>
+        <button class="view-btn" title="Reset view" data-view="reset">↺</button>
+      </div>
+
+      <div class="model-status" id="model-status">
+        Placeholder geometry · drop .glb files in <code>/models</code> to upgrade
+      </div>
+    </main>
+
+    <!-- Street tray -->
+    <footer id="tray">
+      <div class="tray-header">
+        <span class="tray-label">Your Street</span>
+        <span class="tray-count" id="tray-count">0 buildings</span>
+        <button class="clear-btn" id="clear-btn">Clear all</button>
+      </div>
+      <div id="tray-slots">
+        <div class="tray-empty">Add buildings from the panel to start your street</div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Three.js r148 — last version with reliable UMD addon files on CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/environments/RoomEnvironment.js"></script>
+
+  <!-- App modules (order matters) -->
+  <script src="js/data.js"></script>
+  <script src="js/scene.js"></script>
+  <script src="js/controls.js"></script>
+  <script src="js/tray.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>

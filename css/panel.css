@@ -1,0 +1,171 @@
+/* ─────────────────────────────────────────
+   panel.css — left sidebar building list
+───────────────────────────────────────── */
+
+#panel {
+  grid-row: 2 / 3;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 10px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+}
+
+#panel .section-label {
+  padding: 6px 6px 4px;
+  margin-top: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-hint);
+}
+
+/* Building list button */
+.building-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 10px;
+  width: 100%;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  text-align: left;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.building-btn:hover {
+  background: var(--bg);
+  border-color: var(--border);
+}
+
+.building-btn:active {
+  transform: scale(0.98);
+}
+
+/* Colour swatch / thumbnail */
+.building-btn .swatch {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-sm);
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+
+.building-btn .swatch img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Text info */
+.building-btn .info {
+  flex: 1;
+  min-width: 0;
+}
+
+.building-btn .name {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.building-btn .meta {
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--text-hint);
+}
+
+/* Add icon */
+.building-btn .add-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--border-md);
+  font-size: 14px;
+  line-height: 1;
+  color: var(--text-muted);
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+
+.building-btn:hover .add-icon {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* ── Floor cutoff control ─────────────────────────────────────────────────── */
+
+.floor-control {
+  padding: 0 6px 8px;
+}
+
+.floor-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 4px;
+}
+
+.floor-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 11px;
+  font-family: var(--font);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.1s, border-color 0.1s, color 0.1s;
+  text-align: left;
+  width: 100%;
+}
+
+.floor-step:hover {
+  background: var(--bg);
+  border-color: var(--border);
+}
+
+.floor-step.active {
+  background: var(--text);
+  color: #fff;
+  border-color: var(--text);
+}
+
+.floor-step .pips {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5px;
+  flex-shrink: 0;
+}
+
+.floor-step .pips span {
+  display: block;
+  width: 14px;
+  height: 3px;
+  border-radius: 1px;
+  background: currentColor;
+  opacity: 0.3;
+}
+
+.floor-step .pips span.on {
+  opacity: 1;
+}

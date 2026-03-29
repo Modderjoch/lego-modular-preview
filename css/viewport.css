@@ -1,0 +1,88 @@
+/* ─────────────────────────────────────────
+   viewport.css — 3D canvas area
+───────────────────────────────────────── */
+
+#viewport {
+  grid-row: 2 / 3;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+#canvas3d {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Empty-state hint */
+.viewport-hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.viewport-hint .icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+  opacity: 0.18;
+}
+
+.viewport-hint p {
+  font-size: 13px;
+  color: var(--text-hint);
+}
+
+.viewport-hint .sub-hint {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--text-hint);
+  opacity: 0.6;
+}
+
+/* View preset buttons */
+.view-controls {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.view-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: var(--surface);
+  border: 1px solid var(--border-md);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--text-muted);
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+
+.view-btn:hover {
+  background: var(--text);
+  border-color: var(--text);
+  color: #fff;
+}
+
+/* Status badge */
+.model-status {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  padding: 3px 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 10px;
+  color: var(--text-hint);
+}

@@ -1,0 +1,47 @@
+/* ─────────────────────────────────────────
+   reset.css — box model, tokens, base styles
+───────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #f7f6f3;
+  --surface: #ffffff;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-md: rgba(0, 0, 0, 0.13);
+  --text: #1a1a18;
+  --text-muted: #6b6b67;
+  --text-hint: #9a9a95;
+  --accent: #e3000b;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --panel-w: 320px;
+  --tray-h: 120px;
+  --font: 'DM Sans', system-ui, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: var(--font);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+code {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.9em;
+}

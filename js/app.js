@@ -53,7 +53,7 @@ function buildPanel() {
 
   const categories = {
     official: 'Official Modulars',
-    unofficial: 'Unofficial Builds',
+    unofficial: 'Unofficial Modulars',
     road: 'Road & Extras'
   };
 

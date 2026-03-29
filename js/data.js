@@ -207,7 +207,7 @@ const MODULARS = [
     year: 2017,
     set: '70620',
     floors: 1,
-    widthU: 1.5,
+    widthU: 1,
     scaleOverride: 0.01707,
     category: 'unofficial',
   },

@@ -17,6 +17,7 @@
 // Each entry: { uid: string, modularId: string }
 let streetInstances = [];
 let uidCounter = 0;
+let _activeCategory = null; // set to first category on buildPanel()
 
 // ─── Boot ─────────────────────────────────────────────────────────────────────
 
@@ -50,26 +51,50 @@ let uidCounter = 0;
 
 function buildPanel() {
   const panel = document.getElementById('panel');
-  const isMobile = () => window.innerWidth <= 640;
 
-  // Group modulars by category for desktop section labels
+  // Derive ordered category list from data
+  const categories = [];
   const grouped = {};
-  MODULARS.forEach((modular) => {
-    const cat = modular.category || 'Official';
-    if (!grouped[cat]) grouped[cat] = [];
-    grouped[cat].push(modular);
+  MODULARS.forEach((m) => {
+    const cat = m.category || 'official';
+    if (!grouped[cat]) { grouped[cat] = []; categories.push(cat); }
+    grouped[cat].push(m);
   });
 
-  Object.entries(grouped).forEach(([category, modulars]) => {
-    // Section label — hidden on mobile via CSS, visible on desktop
-    const label = document.createElement('div');
-    label.className = 'section-label panel-section-label';
-    label.textContent = category;
-    panel.appendChild(label);
+  _activeCategory = categories[0];
 
-    modulars.forEach((modular) => {
+  // ── Tab bar ────────────────────────────────────────────────────────────────
+  const tabBar = document.createElement('div');
+  tabBar.className = 'panel-tabs';
+  tabBar.setAttribute('role', 'tablist');
+
+  const LABELS = { official: 'Official', unofficial: 'Unofficial', road: 'Roads' };
+
+  categories.forEach((cat) => {
+    const tab = document.createElement('button');
+    tab.className = 'panel-tab' + (cat === _activeCategory ? ' active' : '');
+    tab.textContent = LABELS[cat] || cat.charAt(0).toUpperCase() + cat.slice(1);
+    tab.setAttribute('role', 'tab');
+    tab.setAttribute('aria-selected', cat === _activeCategory ? 'true' : 'false');
+    tab.dataset.cat = cat;
+    tab.addEventListener('click', () => switchTab(cat));
+    tabBar.appendChild(tab);
+  });
+
+  panel.appendChild(tabBar);
+
+  // ── Building list container ────────────────────────────────────────────────
+  const list = document.createElement('div');
+  list.className = 'panel-list';
+  list.id = 'panel-list';
+  panel.appendChild(list);
+
+  // ── Render all buttons, hidden by default unless in active category ────────
+  categories.forEach((cat) => {
+    grouped[cat].forEach((modular) => {
       const btn = document.createElement('button');
-      btn.className = 'building-btn';
+      btn.className = 'building-btn' + (cat !== _activeCategory ? ' panel-hidden' : '');
+      btn.dataset.cat = cat;
       btn.setAttribute('aria-label', `Add ${modular.name}`);
 
       const thumbUrl = `models/${modular.category}/${modular.id}/thumbnail.jpg`;
@@ -78,7 +103,7 @@ function buildPanel() {
           <img
             src="${thumbUrl}"
             alt="${modular.name}"
-            onerror="this.style.display='none'; this.parentElement.style.background='${modular.color}';"
+            onerror="this.style.display='none'; this.parentElement.style.background='${modular.color || '#ccc'}';"
           />
         </div>
         <div class="info">
@@ -88,9 +113,29 @@ function buildPanel() {
         <div class="add-icon" aria-hidden="true">+</div>
       `;
       btn.addEventListener('click', () => addBuilding(modular.id));
-      panel.appendChild(btn);
+      list.appendChild(btn);
     });
   });
+}
+
+function switchTab(cat) {
+  _activeCategory = cat;
+
+  // Update tab active states
+  document.querySelectorAll('.panel-tab').forEach((t) => {
+    const isActive = t.dataset.cat === cat;
+    t.classList.toggle('active', isActive);
+    t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+  });
+
+  // Show/hide building buttons
+  document.querySelectorAll('#panel-list .building-btn').forEach((btn) => {
+    btn.classList.toggle('panel-hidden', btn.dataset.cat !== cat);
+  });
+
+  // Reset scroll position so the list starts from the top
+  const list = document.getElementById('panel-list');
+  if (list) list.scrollTop = 0;
 }
 
 // ─── Actions ──────────────────────────────────────────────────────────────────

@@ -1,23 +1,71 @@
+/* ── Panel shell ─────────────────────────────────────────────────────────── */
+
 #panel {
   grid-row: 2 / 3;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 12px 10px;
   background: var(--surface);
   border-right: 1px solid var(--border);
+  overflow: hidden;
+  /* children handle their own scroll */
+}
+
+/* ── Desktop tab bar ─────────────────────────────────────────────────────── */
+
+.panel-tabs {
+  display: flex;
+  flex-shrink: 0;
+  gap: 0;
+  padding: 10px 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.panel-tab {
+  flex: 1;
+  padding: 6px 4px 8px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font);
+  color: var(--text-hint);
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: color 0.12s, border-color 0.12s;
+  white-space: nowrap;
+  text-align: center;
+  margin-bottom: -1px;
+  /* sit on top of the border-bottom of .panel-tabs */
+}
+
+.panel-tab:hover {
+  color: var(--text-muted);
+}
+
+.panel-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ── Desktop building list ───────────────────────────────────────────────── */
+
+.panel-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 10px;
   overflow-y: auto;
 }
 
-#panel .section-label {
-  padding: 6px 6px 4px;
-  margin-top: 4px;
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-hint);
+/* ── Visibility utility (beats display:flex on .building-btn) ────────────── */
+
+.panel-hidden {
+  display: none !important;
 }
+
+/* ── Building button ─────────────────────────────────────────────────────── */
 
 .building-btn {
   display: flex;
@@ -30,6 +78,7 @@
   border-radius: var(--radius-sm);
   text-align: left;
   transition: background 0.12s, border-color 0.12s;
+  cursor: pointer;
 }
 
 .building-btn:hover {
@@ -58,7 +107,6 @@
   display: block;
 }
 
-/* Text info */
 .building-btn .info {
   flex: 1;
   min-width: 0;
@@ -101,72 +149,99 @@
   color: #fff;
 }
 
-
-
-/* Mobile */
+/* ── Mobile ──────────────────────────────────────────────────────────────── */
 
 @media (max-width: 640px) {
 
   #panel {
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    align-items: center !important;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    height: 140px !important;
-    padding: 8px 10px !important;
-    border-right: none !important;
-    border-bottom: 1px solid var(--border) !important;
+    flex-shrink: 0;
+    flex-direction: column;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
   }
 
-  #panel .panel-section-label,
-  #panel .section-label,
-  #panel #floor-control {
-    display: none !important;
+  /* Tab bar: full-width row of equal tabs */
+  .panel-tabs {
+    padding: 0;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
   }
 
-  #panel .building-btn {
-    display: flex !important;
-    flex-direction: column !important;
-    flex-shrink: 0 !important;
-    flex-grow: 0 !important;
-    width: 80px !important;
-    padding: 2px !important;
-    gap: 0 !important;
-    align-items: center !important;
-    border-radius: var(--radius-sm) !important;
-    background: var(--surface) !important;
-    justify-content: flex-start !important;
+  .panel-tab {
+    padding: 8px 6px;
+    font-size: 11px;
   }
 
-  #panel .building-btn .swatch {
-    width: 80px !important;
-    height: 80px !important;
-    border-radius: 3px !important;
-    border: none !important;
-    flex-shrink: 0 !important;
+  /* Building list: horizontal scrolling strip */
+  .panel-list {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 8px 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    height: 116px;
+    /* thumb + name + meta */
+    flex-shrink: 0;
   }
 
-  #panel .building-btn .add-icon {
-    display: none !important;
+  .panel-list::-webkit-scrollbar {
+    display: none;
   }
 
-  #panel .building-btn .info {
-    display: block !important;
+  /* Cards: compact vertical thumbnail + text */
+  .building-btn {
+    flex-direction: column;
+    flex-shrink: 0;
+    flex-grow: 0;
+    width: 80px;
+    padding: 0;
+    gap: 0;
+    align-items: center;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    justify-content: flex-start;
+  }
+
+  .building-btn:hover {
+    border-color: var(--accent);
+    background: var(--surface);
+  }
+
+  .building-btn .swatch {
+    width: 80px;
+    height: 72px;
+    border-radius: 0;
+    flex-shrink: 0;
+  }
+
+  .building-btn .add-icon {
+    display: none;
+  }
+
+  .building-btn .info {
+    display: block;
     width: 100%;
+    padding: 3px 4px 4px;
   }
 
-  #panel .building-btn .name {
-    font-size: 10px;
+  .building-btn .name {
+    font-size: 9px;
     white-space: normal;
     text-align: center;
     line-height: 1.2;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
-  #panel .building-btn .meta {
-    display: block !important;
-    font-size: 9px;
-    text-align: center;
-    line-height: 1.2;
+  .building-btn .meta {
+    display: none;
+    /* save space on mobile */
   }
 }

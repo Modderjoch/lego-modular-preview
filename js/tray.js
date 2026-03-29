@@ -115,19 +115,23 @@ function _createSlot(inst, modular) {
     _touch.srcEl = el;
     _touch.moved = false;
 
-    // Long-press (300ms) activates drag mode
+    // Long-press (500ms) activates drag mode — 300ms races with the browser's
+    // own long-press / context-menu gesture, so we use 500ms to stay clear.
     _touch.longPress = setTimeout(() => {
       _touchBeginDrag(el, e.touches[0]);
-    }, 300);
+    }, 500);
 
-  }, { passive: true });
+  }, { passive: false }); // passive:false so we can preventDefault in touchmove
+
+  // Suppress the native context menu that appears on long-press on mobile
+  el.addEventListener('contextmenu', (e) => e.preventDefault());
 
   el.addEventListener('touchmove', (e) => {
     const dx = e.touches[0].clientX - _touch.startX;
     const dy = e.touches[0].clientY - _touch.startY;
 
     // Cancel long-press if the finger moved significantly before it fired
-    if (!_touch.ghost && Math.hypot(dx, dy) > 8) {
+    if (!_touch.ghost && Math.hypot(dx, dy) > 10) {
       clearTimeout(_touch.longPress);
       _touch.longPress = null;
       _touch.uid = null;

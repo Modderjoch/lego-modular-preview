@@ -72,54 +72,6 @@
 
   #panel {
     flex-shrink: 0;
-    flex-direction: row;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 10px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    height: 82px;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    flex-wrap: nowrap;
-  }
-
-  #panel::-webkit-scrollbar {
-    display: none;
-  }
-
-  #panel {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  #panel .section-label,
-  #panel #floor-control {
-    display: none !important;
-  }
-
-  .building-btn {
-    flex-direction: column;
-    flex-shrink: 0;
-    width: 60px;
-    padding: 0;
-    gap: 0;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-    background: var(--surface);
-  }
-
-  .building-btn .swatch {
-    width: 60px;
-    height: 60px;
-    border-radius: 0;
-    border: none;
-  }
-
-  .building-btn .info,
-  .building-btn .add-icon {
-    display: none;
   }
 
   #viewport {
@@ -130,23 +82,5 @@
   #tray {
     flex-shrink: 0;
     height: var(--tray-h);
-  }
-
-  .right-controls {
-    top: 6px;
-    right: 6px;
-    gap: 6px;
-  }
-
-  .floor-control {
-    min-width: 100px;
-    padding: 5px 7px;
-    font-size: 10px;
-  }
-
-  .view-btn {
-    width: 26px;
-    height: 26px;
-    font-size: 11px;
   }
 }

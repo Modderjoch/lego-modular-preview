@@ -70,10 +70,10 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":19653,
+			"count":64667,
 			"max":[
 				127.95999908447266,
-				1.8000094890594482,
+				3.1800060272216797,
 				127.95999908447266
 			],
 			"min":[
@@ -86,45 +86,45 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":19653,
+			"count":64667,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":19653,
+			"count":64667,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":38292,
+			"count":161772,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":235836,
+			"byteLength":776004,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":235836,
-			"byteOffset":235836,
+			"byteLength":776004,
+			"byteOffset":776004,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":157224,
-			"byteOffset":471672,
+			"byteLength":517336,
+			"byteOffset":1552008,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":76584,
-			"byteOffset":628896,
+			"byteLength":323544,
+			"byteOffset":2069344,
 			"target":34963
 		}
 	],
@@ -136,7 +136,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":705480,
+			"byteLength":2392888,
 			"uri":"t-road.bin"
 		}
 	]

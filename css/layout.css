@@ -19,7 +19,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--accent);
+  background: #fe7200;
   flex-shrink: 0;
 }
 
@@ -27,7 +27,7 @@
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 }
 
 #header .sub {
@@ -59,7 +59,11 @@
 
   #header {
     flex-shrink: 0;
-    height: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
 
   #header .hint {

@@ -70,10 +70,10 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":10229,
+			"count":35592,
 			"max":[
 				127.95999908447266,
-				1.8000094890594482,
+				3.180006504058838,
 				127.95999908447266
 			],
 			"min":[
@@ -86,45 +86,45 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":10229,
+			"count":35592,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":10229,
+			"count":35592,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":21012,
+			"count":86628,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":122748,
+			"byteLength":427104,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":122748,
-			"byteOffset":122748,
+			"byteLength":427104,
+			"byteOffset":427104,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":81832,
-			"byteOffset":245496,
+			"byteLength":284736,
+			"byteOffset":854208,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":42024,
-			"byteOffset":327328,
+			"byteLength":173256,
+			"byteOffset":1138944,
 			"target":34963
 		}
 	],
@@ -136,7 +136,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":369352,
+			"byteLength":1312200,
 			"uri":"cross-road.bin"
 		}
 	]

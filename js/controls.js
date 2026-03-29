@@ -14,15 +14,15 @@ const camControls = {
   target: new THREE.Vector3(0, 3, 0),
 
   spherical: {
-    theta:  0.4,          // horizontal angle (radians)
-    phi:    Math.PI / 4,  // vertical angle
+    theta: 0.4,          // horizontal angle (radians)
+    phi: Math.PI / 4,  // vertical angle
     radius: 28,           // distance from target
   },
 
   _dragging: false,
-  _panning:  false,
-  _lastX:    0,
-  _lastY:    0,
+  _panning: false,
+  _lastX: 0,
+  _lastY: 0,
 
   updateCamera() {
     const { theta, phi, radius } = this.spherical;
@@ -42,8 +42,8 @@ function initControls(canvas) {
 
   // ── Mouse ────────────────────────────────────────────────────────────────
   canvas.addEventListener('mousedown', (e) => {
-    if (e.button === 2) camControls._panning  = true;
-    else                camControls._dragging = true;
+    if (e.button === 2) camControls._panning = true;
+    else camControls._dragging = true;
     camControls._lastX = e.clientX;
     camControls._lastY = e.clientY;
     e.preventDefault();
@@ -51,7 +51,7 @@ function initControls(canvas) {
 
   window.addEventListener('mouseup', () => {
     camControls._dragging = false;
-    camControls._panning  = false;
+    camControls._panning = false;
   });
 
   window.addEventListener('mousemove', (e) => {
@@ -71,7 +71,7 @@ function initControls(canvas) {
 
     if (camControls._panning) {
       const right = new THREE.Vector3();
-      const dir   = new THREE.Vector3();
+      const dir = new THREE.Vector3();
       camera.getWorldDirection(dir);
       right.crossVectors(dir, camera.up).normalize();
       camControls.target.addScaledVector(right, -dx * 0.04);
@@ -149,10 +149,10 @@ function initControls(canvas) {
 function setView(mode) {
   const s = camControls.spherical;
   switch (mode) {
-    case 'front': s.theta = 0;            s.phi = Math.PI / 5;  s.radius = 30; break;
-    case 'side':  s.theta = Math.PI / 2;  s.phi = Math.PI / 5;  s.radius = 30; break;
-    case 'top':   s.theta = 0;            s.phi = 0.12;          s.radius = 35; break;
-    case 'reset': s.theta = 0.4;          s.phi = Math.PI / 4;  s.radius = 28; break;
+    case 'front': s.theta = 0; s.phi = Math.PI / 2; s.radius = 22; break;
+    case 'side': s.theta = Math.PI / 2; s.phi = Math.PI / 5; s.radius = 30; break;
+    case 'top': s.theta = 0; s.phi = 0.12; s.radius = 35; break;
+    case 'reset': s.theta = 0.4; s.phi = Math.PI / 4; s.radius = 28; break;
   }
   camControls.updateCamera();
 }

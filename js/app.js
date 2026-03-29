@@ -41,6 +41,7 @@ let uidCounter = 0;
 
   window.onTrayReorder = reorderBuilding;
   window.onTrayRemove = removeBuilding;
+  window.onTrayRotate = rotateBuilding;
 
   startRenderLoop();
 })();
@@ -80,7 +81,14 @@ function buildPanel() {
 
 function addBuilding(modularId) {
   const uid = 'b' + (++uidCounter);
-  streetInstances.push({ uid, modularId });
+  streetInstances.push({ uid, modularId, rotation: 0 });
+  syncStreet();
+}
+
+function rotateBuilding(uid) {
+  const inst = streetInstances.find((i) => i.uid === uid);
+  if (!inst) return;
+  inst.rotation = ((inst.rotation || 0) + 90) % 360;
   syncStreet();
 }
 
@@ -119,6 +127,24 @@ function syncStreet() {
 
 function wireUI() {
   document.getElementById('clear-btn').addEventListener('click', clearStreet);
+
+  document.getElementById('export-btn').addEventListener('click', exportImage);
+}
+
+// ─── Export ───────────────────────────────────────────────────────────────────
+
+function exportImage() {
+  // Three.js renders to a WebGL canvas — we need to capture it before the
+  // browser clears the buffer. Force a render then grab the image synchronously.
+  renderer.render(scene, camera);
+
+  const canvas = document.getElementById('canvas3d');
+  const dataUrl = canvas.toDataURL('image/png');
+
+  const a = document.createElement('a');
+  a.href = dataUrl;
+  a.download = 'modular-street.png';
+  a.click();
 }
 
 // ─── Floor control ────────────────────────────────────────────────────────────
@@ -150,7 +176,7 @@ function updateFloorControl() {
   controlEl.style.display = 'block';
 
   // "All floors" button
-  const allBtn = _makeFloorBtn('All floors', maxFloors, maxFloors, () => {
+  const allBtn = _makeFloorBtn('All stories', maxFloors, maxFloors, () => {
     _currentFloor = Infinity;
     setFloorClip(Infinity);
     _setActive(allBtn);
@@ -160,7 +186,7 @@ function updateFloorControl() {
   // Buttons from top floor down to ground only
   for (let f = maxFloors - 1; f >= 1; f--) {
     const floor = f;
-    const label = floor === 1 ? 'Ground floor only' : `${floor} floors`;
+    const label = floor === 1 ? 'Ground story only' : `${floor} stories`;
     const btn = _makeFloorBtn(label, floor, maxFloors, () => {
       _currentFloor = floor;
       setFloorClip(floor * FLOOR_H);
@@ -189,7 +215,7 @@ function _makeFloorBtn(label, visibleFloors, maxFloors, onClick) {
   const btn = document.createElement('button');
   btn.className = 'floor-step';
 
-  // Build pip indicators — one bar per floor, filled = visible
+  // Pip bars — one per floor, filled = visible
   const pips = document.createElement('div');
   pips.className = 'pips';
   for (let i = maxFloors; i >= 1; i--) {

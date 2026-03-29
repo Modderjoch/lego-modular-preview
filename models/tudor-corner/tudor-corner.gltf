@@ -83,61 +83,61 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":1154865,
+			"count":560466,
 			"max":[
 				136.3980712890625,
-				195.01828002929688,
+				195.4169921875,
 				154.37867736816406
 			],
 			"min":[
-				-120.0634765625,
-				-124.86483764648438,
-				-109.5414047241211
+				-119.9197998046875,
+				-124.864990234375,
+				-109.61991119384766
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":1154865,
+			"count":560466,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":1154865,
+			"count":560466,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5125,
-			"count":1521534,
+			"count":760758,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":13858380,
+			"byteLength":6725592,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":13858380,
-			"byteOffset":13858380,
+			"byteLength":6725592,
+			"byteOffset":6725592,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":9238920,
-			"byteOffset":27716760,
+			"byteLength":4483728,
+			"byteOffset":13451184,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":6086136,
-			"byteOffset":36955680,
+			"byteLength":3043032,
+			"byteOffset":17934912,
 			"target":34963
 		}
 	],
@@ -149,7 +149,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":43041816,
+			"byteLength":20977944,
 			"uri":"tudor-corner.bin"
 		}
 	]

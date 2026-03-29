@@ -47,6 +47,7 @@ function _createSlot(inst, modular) {
   el.dataset.uid = inst.uid;
 
   const thumbUrl = `models/${modular.id}/thumbnail.jpg`;
+  const rotLabel = inst.rotation ? `${inst.rotation}°` : '↻';
   el.innerHTML = `
     <div class="slot-thumb" style="background: ${modular.color};">
       <img
@@ -57,12 +58,19 @@ function _createSlot(inst, modular) {
     </div>
     <div class="slot-label">${modular.name}</div>
     <button class="remove-slot" aria-label="Remove ${modular.name}">✕</button>
+    <button class="rotate-slot" aria-label="Rotate ${modular.name}">${rotLabel}</button>
   `;
 
   // Remove button
   el.querySelector('.remove-slot').addEventListener('click', (e) => {
     e.stopPropagation();
     onTrayRemove(inst.uid);
+  });
+
+  // Rotate button
+  el.querySelector('.rotate-slot').addEventListener('click', (e) => {
+    e.stopPropagation();
+    onTrayRotate(inst.uid);
   });
 
   // Drag events
@@ -102,3 +110,4 @@ function _createSlot(inst, modular) {
 // These are no-ops by default; app.js sets them after load.
 function onTrayReorder(srcUid, dstUid) { }
 function onTrayRemove(uid) { }
+function onTrayRotate(uid) { }

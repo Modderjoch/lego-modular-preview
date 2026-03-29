@@ -10,7 +10,7 @@
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const FLOOR_H = 1.5;   // world-units per floor
+const FLOOR_H = 1.4;   // world-units per floor
 const GAP = 0.0;   // gap between buildings (0 = flush)
 
 // Standard LEGO dimensions (mm):
@@ -20,7 +20,7 @@ const GAP = 0.0;   // gap between buildings (0 = flush)
 // We scale every model so 96mm = FLOOR_H world units.
 // That means 1mm = FLOOR_H/96 world units, and one module width is always:
 //   256mm × (FLOOR_H / 96) world units — regardless of export scale.
-const MM_TO_WU = FLOOR_H / 87;          // millimetres → world units
+const MM_TO_WU = FLOOR_H / 82;          // millimetres → world units
 const MODULE_W = 256 * MM_TO_WU;        // one 32-stud module in world units
 
 // ─── Scene globals ────────────────────────────────────────────────────────────
@@ -46,25 +46,19 @@ let _clipEnabled = false;
 // ─── Init ─────────────────────────────────────────────────────────────────────
 
 function initScene(canvas) {
-  renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  renderer.localClippingEnabled = true; // required for clipping planes on materials
-  renderer.setClearColor(0xd6e8f5, 1); // soft sky blue
+  renderer.localClippingEnabled = true;
+  renderer.setClearColor(0x050505, 1); // fallback if background texture fails
 
-  // sRGB output — required for correct texture colours
   renderer.outputEncoding = THREE.sRGBEncoding;
 
-  // Enable global clipping planes (used by the floor cutoff control)
-  renderer.localClippingEnabled = true;
-
-  // ReinhardToneMapping gives a warmer, more natural result than Linear
-  // without crushing dark materials the way ACES does.
-  // Exposure > 1 brightens the overall scene to compensate for the
-  // darker tone curve.
-  renderer.toneMapping = THREE.ReinhardToneMapping;
-  renderer.toneMappingExposure = 1.8;
+  // ACESFilmic gives rich, saturated colours with natural highlight rolloff —
+  // ideal for a dark studio look. Exposure tuned to compensate for the dark bg.
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.2;
 
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(45, 1, 0.1, 2000);
@@ -75,6 +69,7 @@ function initScene(canvas) {
 
   _addEnvironment();
   _addLights();
+  _addBackgroundGradient();
   _handleResize();
   window.addEventListener('resize', _handleResize);
 }
@@ -95,28 +90,48 @@ function _addEnvironment() {
 // ─── Lights ───────────────────────────────────────────────────────────────────
 
 function _addLights() {
-  // Warm ambient — simulates bounced indoor/studio light
-  // Slightly yellow-white rather than pure white to counter the cold cast
-  scene.add(new THREE.AmbientLight(0xfff5e0, 0.6));
+  // Very low ambient — just enough to lift the deepest shadows off pure black
+  scene.add(new THREE.AmbientLight(0x221a0f, 0.8));
 
-  // Key light — warm afternoon sun from upper-right
-  const sun = new THREE.DirectionalLight(0xffe8c0, 0.9);
-  sun.position.set(10, 30, 20);
-  sun.castShadow = true;
-  sun.shadow.mapSize.set(2048, 2048);
-  sun.shadow.camera.near = 1;
-  sun.shadow.camera.far = 200;
-  sun.shadow.camera.left = -60;
-  sun.shadow.camera.right = 60;
-  sun.shadow.camera.top = 40;
-  sun.shadow.camera.bottom = -20;
-  scene.add(sun);
+  // Rim light — cool narrow light from behind/above to separate buildings
+  // from the dark background and give that studio product-shot edge
+  // const rim = new THREE.DirectionalLight(0xa0c8ff, .7);
+  // rim.position.set(-12, 20, -15);
+  // scene.add(rim);
 
-  // Fill light — soft cool bounce from the left/back to separate shadows
-  // Keep it subtle so it doesn't wash out the key light warmth
-  const fill = new THREE.DirectionalLight(0xc8dff5, 0.35);
-  fill.position.set(-10, 8, -8);
+  // Subtle warm fill from below-front to soften harsh shadows on facades
+  const fill = new THREE.DirectionalLight(0xffe0b0, 0.4);
+  fill.position.set(0, -4, 20);
   scene.add(fill);
+}
+
+// ─── Background gradient ──────────────────────────────────────────────────────
+
+function _addBackgroundGradient() {
+  // Full-screen quad rendered behind everything — radial gradient from a
+  // warm dark centre to pure black at the edges, like a studio vignette.
+  // Uses an orthographic camera so it always fills the canvas exactly.
+  const size = 512;
+  const c = document.createElement('canvas');
+  c.width = c.height = size;
+  const ctx = c.getContext('2d');
+
+  const grad = ctx.createRadialGradient(
+    size / 2, size / 2, 0,
+    size / 2, size / 2, size / 2
+  );
+  // Many stops for a silky smooth transition — no visible banding
+  grad.addColorStop(0.00, '#1a1a1a');
+  grad.addColorStop(1.00, '#030302');
+
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, size, size);
+
+  const tex = new THREE.CanvasTexture(c);
+
+  // Render as a scene background texture — no geometry needed,
+  // Three.js renders it behind everything automatically.
+  scene.background = tex;
 }
 
 
@@ -151,10 +166,15 @@ function loadBuilding(modular, onLoaded) {
   // First request for this modular — start loading and set up the queue
   loadingQueue.set(modular.id, [onLoaded]);
 
+  // Try in order:
+  //   1. models/cafe-corner/cafe-corner.gltf  (subfolder GLTF — preferred)
+  //   2. models/cafe-corner/cafe-corner.glb   (subfolder GLB)
+  //   3. models/cafe-corner.glb               (root GLB — legacy fallback)
   const gltfUrl = `models/${modular.id}/${modular.id}.gltf`;
-  const glbUrl = `models/${modular.id}.glb`;
+  const glbSubUrl = `models/${modular.id}/${modular.id}.glb`;
+  const glbRootUrl = `models/${modular.id}.glb`;
 
-  _tryLoad(gltfUrl, glbUrl, modular, (group) => {
+  _tryLoad([gltfUrl, glbSubUrl, glbRootUrl], modular, (group) => {
     // Store the original in cache, then flush all waiting callbacks with clones
     modelCache.set(modular.id, group);
     const callbacks = loadingQueue.get(modular.id) || [];
@@ -166,8 +186,18 @@ function loadBuilding(modular, onLoaded) {
   });
 }
 
-function _tryLoad(primaryUrl, fallbackUrl, modular, onLoaded) {
-  const url = primaryUrl;
+// _tryLoad(urls, modular, onLoaded) — tries each URL in the array in order.
+function _tryLoad(urls, modular, onLoaded) {
+  if (!urls.length) {
+    console.warn(`[ModularStreet] No more fallbacks for ${modular.id} — using placeholder`);
+    _updateStatus(`No model for ${modular.name} — using placeholder`);
+    onLoaded(_buildPlaceholder(modular));
+    return;
+  }
+
+  const url = urls[0];
+  const remainingUrls = urls.slice(1);
+
   console.log(`[ModularStreet] Loading: ${url}`);
 
   gltfLoader.load(
@@ -179,35 +209,33 @@ function _tryLoad(primaryUrl, fallbackUrl, modular, onLoaded) {
 
       const group = gltf.scene;
 
-      // GLTF already references its own textures — just enable shadows.
-      // Do not touch materials or textures; Three.js + GLTFLoader handle it.
+      // Enable shadows — GLTF/GLB handles its own materials and textures
       group.traverse((child) => {
         if (!child.isMesh) return;
         child.castShadow = true;
         child.receiveShadow = true;
       });
 
-      // Scale using a fixed physical reference: 96mm per floor = FLOOR_H world units.
-      // This makes every model use the same mm→world-unit conversion regardless
-      // of how it was exported, so MODULE_W snapping is always consistent.
+      // Scale: use scaleOverride from data.js if set, otherwise derive from
+      // physical dimensions (96mm per LEGO floor = FLOOR_H world units).
       const rawBox = new THREE.Box3().setFromObject(group);
       const rawSize = rawBox.getSize(new THREE.Vector3());
-
-      // Estimate raw mm height: assume standard 96mm per floor
-      const expectedRawH = modular.floors * 96; // mm
-      // Use actual raw height if it's close to expected (within 30%),
-      // otherwise fall back to fitting by raw height
       const refH = rawSize.y;
-      const scale = modular.scaleOverride || (
-        (expectedRawH * 0.7 < refH && refH < expectedRawH * 1.3)
+
+      let scale;
+      if (modular.scaleOverride) {
+        scale = modular.scaleOverride;
+      } else {
+        const expectedRawH = modular.floors * 96;
+        scale = (expectedRawH * 0.7 < refH && refH < expectedRawH * 1.3)
           ? MM_TO_WU
-          : (modular.floors * FLOOR_H) / refH
-      );
+          : (modular.floors * FLOOR_H) / refH;
+      }
 
       group.scale.setScalar(scale);
       console.log(`[ModularStreet] ${modular.name} scale: ${scale.toFixed(5)}, module width: ${(MODULE_W * modular.widthU).toFixed(3)} wu`);
 
-      // Lift to ground
+      // Lift to ground level
       const scaledBox = new THREE.Box3().setFromObject(group);
       group.position.y = -scaledBox.min.y;
 
@@ -217,17 +245,8 @@ function _tryLoad(primaryUrl, fallbackUrl, modular, onLoaded) {
     undefined,
 
     (err) => {
-      // Log the full error so we can see exactly what failed
-      console.error(`[ModularStreet] ✗ Failed to load: ${url}`, err);
-      if (err && err.target) console.error('  HTTP status:', err.target.status, err.target.responseURL);
-
-      if (fallbackUrl) {
-        console.warn(`[ModularStreet] Trying fallback: ${fallbackUrl}`);
-        _tryLoad(fallbackUrl, null, modular, onLoaded);
-      } else {
-        _updateStatus(`Failed to load ${modular.name} — using placeholder`);
-        onLoaded(_buildPlaceholder(modular));
-      }
+      console.warn(`[ModularStreet] ✗ ${url} failed`);
+      _tryLoad(remainingUrls, modular, onLoaded);
     }
   );
 }
@@ -353,6 +372,7 @@ function rebuildStreet(instances, camControls, onDone) {
     groups.forEach((entry, idx) => {
       if (!entry) return;
       const { group, modular: m } = entry;
+      const inst = instances[idx];
 
       // Snap width is always MODULE_W × widthU — fixed in world units,
       // independent of how any individual model was exported or scaled.
@@ -365,15 +385,17 @@ function rebuildStreet(instances, camControls, onDone) {
       group.position.x = cursorX;
       group.position.z = 0;
 
+      group.rotation.y = (inst.rotation || 0) * Math.PI / 180;
+
       scene.add(group);
       buildingMeshes.set(idx, group);
       cursorX += snapW;
     });
 
     // Re-centre camera on the street midpoint
-    camControls.target.set(cursorX / 2, FLOOR_H * 2, 0);
-    camControls.spherical.radius = Math.max(20, cursorX * 1.2);
-    camControls.updateCamera();
+    // camControls.target.set(cursorX / 2, FLOOR_H * 2, 0);
+    // camControls.spherical.radius = Math.max(20, cursorX * 1.2);
+    // camControls.updateCamera();
 
     if (onDone) onDone();
   }

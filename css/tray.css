@@ -8,7 +8,7 @@
   flex-direction: column;
   gap: 6px;
   padding: 10px 14px;
-  background: var(--surface);
+  background: #fff;
   border-top: 1px solid var(--border);
 }
 
@@ -80,7 +80,7 @@
   user-select: none;
   transition: transform 0.12s, box-shadow 0.12s;
   border: 1px solid var(--border);
-  background: var(--surface);
+  background: #fff;
 }
 
 .tray-slot:active {
@@ -138,6 +138,37 @@
 
 .tray-slot:hover .remove-slot {
   opacity: 1;
+}
+
+/* Rotate button */
+.tray-slot .rotate-slot {
+  position: absolute;
+  bottom: 20px;
+  right: -5px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border: 1px solid var(--border-md);
+  border-radius: 50%;
+  font-size: 8px;
+  color: var(--text-muted);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s;
+}
+
+.tray-slot:hover .rotate-slot {
+  opacity: 1;
+}
+
+.tray-slot .rotate-slot:hover {
+  background: var(--text);
+  color: #fff;
+  border-color: var(--text);
 }
 
 /* Drag states */

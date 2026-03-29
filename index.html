@@ -31,13 +31,9 @@
 
     <!-- Left panel — building list populated by JS -->
     <aside id="panel">
-
-      <!-- Floor cutoff — shown once buildings are placed -->
-      <div class="floor-control" id="floor-control" style="display:none;">
-        <div class="section-label" style="margin-top:12px;">Floors visible</div>
-        <div class="floor-btns" id="floor-btns"></div>
-      </div>
       <div class="section-label">Modular Buildings</div>
+
+
     </aside>
 
     <!-- 3D Viewport -->
@@ -47,14 +43,26 @@
       <div class="viewport-hint" id="viewport-hint">
         <div class="icon">🏙️</div>
         <p>Select buildings from the left panel</p>
-        <p class="sub-hint">They'll snap together on the street below</p>
+        <p class="sub-hint">They'll snap together in the view here.</p>
       </div>
 
-      <div class="view-controls">
-        <button class="view-btn" title="Front view" data-view="front">F</button>
-        <button class="view-btn" title="Side view" data-view="side">S</button>
-        <button class="view-btn" title="Top view" data-view="top">T</button>
-        <button class="view-btn" title="Reset view" data-view="reset">↺</button>
+      <div class="right-controls">
+
+        <div class="floor-control" id="floor-control" style="display:none;">
+          <div class="floor-control-label">Stories</div>
+          <div class="floor-btns" id="floor-btns"></div>
+        </div>
+
+        <div class="view-controls">
+          <div class="floor-control-label">Camera</div>
+          <button class="view-btn" title="Export image" id="export-btn">Download ↓</button>
+          <div class="view-btn-divider"></div>
+          <button class="view-btn" title="Front view" data-view="front">Front</button>
+          <button class="view-btn" title="Side view" data-view="side">Side</button>
+          <button class="view-btn" title="Top view" data-view="top">Top</button>
+          <button class="view-btn" title="Reset view" data-view="reset">Reset ↺</button>
+        </div>
+
       </div>
 
       <div class="model-status" id="model-status">

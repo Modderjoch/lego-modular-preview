@@ -15,12 +15,12 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"part.1591",
+			"name":"part.7535",
 			"rotation":[
 				0.5,
-				-0.5,
-				0.5,
-				0.5000000596046448
+				-0.5000000596046448,
+				0.5000000596046448,
+				0.5
 			]
 		},
 		{
@@ -33,7 +33,7 @@
 	"materials":[
 		{
 			"doubleSided":true,
-			"name":"bake",
+			"name":"bake.001",
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
 					"index":0
@@ -45,7 +45,7 @@
 	],
 	"meshes":[
 		{
-			"name":"3622.003",
+			"name":"3008.008",
 			"primitives":[
 				{
 					"attributes":{
@@ -76,61 +76,61 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":1498620,
+			"count":649197,
 			"max":[
-				127.91263580322266,
-				130.22817993164062,
-				-0.0200042724609375
+				127.96000671386719,
+				130.51254272460938,
+				-0.019989013671875
 			],
 			"min":[
-				-127.8563003540039,
-				-135.16006469726562,
-				-335.99163818359375
+				-127.8779067993164,
+				-135.16000366210938,
+				-336.10040283203125
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":1498620,
+			"count":649197,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":1498620,
+			"count":649197,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5125,
-			"count":1846164,
+			"count":858477,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":17983440,
+			"byteLength":7790364,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":17983440,
-			"byteOffset":17983440,
+			"byteLength":7790364,
+			"byteOffset":7790364,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":11988960,
-			"byteOffset":35966880,
+			"byteLength":5193576,
+			"byteOffset":15580728,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":7384656,
-			"byteOffset":47955840,
+			"byteLength":3433908,
+			"byteOffset":20774304,
 			"target":34963
 		}
 	],
@@ -142,7 +142,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":55340496,
+			"byteLength":24208212,
 			"uri":"green-grocer.bin"
 		}
 	]

@@ -15,17 +15,22 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"part.1599",
+			"name":"part.3841",
 			"rotation":[
-				0.7071068286895752,
-				0,
-				0,
-				0.7071068286895752
+				0.6532815098762512,
+				0.27059805393218994,
+				-0.27059805393218994,
+				0.6532815098762512
+			],
+			"scale":[
+				1.000004529953003,
+				1.000004529953003,
+				1
 			],
 			"translation":[
-				-8,
-				148.60000610351562,
-				52.00000762939453
+				32,
+				190.1999969482422,
+				32.00000762939453
 			]
 		},
 		{
@@ -50,7 +55,7 @@
 	],
 	"meshes":[
 		{
-			"name":"6182.003",
+			"name":"3022.013",
 			"primitives":[
 				{
 					"attributes":{
@@ -81,61 +86,61 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":1139891,
+			"count":666489,
 			"max":[
-				135.9600067138672,
-				78.83197784423828,
-				148.5800018310547
+				180.9619598388672,
+				135.70733642578125,
+				190.18002319335938
 			],
 			"min":[
-				-120.08180236816406,
-				-187.96009826660156,
-				-214.34609985351562
+				-180.96194458007812,
+				-225.47586059570312,
+				-172.78005981445312
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":1139891,
+			"count":666489,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":1139891,
+			"count":666489,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5125,
-			"count":1413969,
+			"count":896322,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":13678692,
+			"byteLength":7997868,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":13678692,
-			"byteOffset":13678692,
+			"byteLength":7997868,
+			"byteOffset":7997868,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":9119128,
-			"byteOffset":27357384,
+			"byteLength":5331912,
+			"byteOffset":15995736,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":5655876,
-			"byteOffset":36476512,
+			"byteLength":3585288,
+			"byteOffset":21327648,
 			"target":34963
 		}
 	],
@@ -147,7 +152,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":42132388,
+			"byteLength":24912936,
 			"uri":"cafe-corner.bin"
 		}
 	]

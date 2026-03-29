@@ -27,7 +27,7 @@
 	"materials":[
 		{
 			"doubleSided":true,
-			"name":"bake",
+			"name":"bake.003",
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
 					"index":0
@@ -70,14 +70,14 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":1345684,
+			"count":624571,
 			"max":[
 				135.26181030273438,
 				378.9599914550781,
 				164.37466430664062
 			],
 			"min":[
-				-127.96026611328125,
+				-127.96842193603516,
 				-0.44716209173202515,
 				-135.96011352539062
 			],
@@ -86,45 +86,45 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":1345684,
+			"count":624571,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":1345684,
+			"count":624571,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5125,
-			"count":1658244,
+			"count":746208,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":16148208,
+			"byteLength":7494852,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":16148208,
-			"byteOffset":16148208,
+			"byteLength":7494852,
+			"byteOffset":7494852,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":10765472,
-			"byteOffset":32296416,
+			"byteLength":4996568,
+			"byteOffset":14989704,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":6632976,
-			"byteOffset":43061888,
+			"byteLength":2984832,
+			"byteOffset":19986272,
 			"target":34963
 		}
 	],
@@ -136,7 +136,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":49694864,
+			"byteLength":22971104,
 			"uri":"grand-emporium.bin"
 		}
 	]

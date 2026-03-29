@@ -44,34 +44,144 @@
   opacity: 0.6;
 }
 
-/* View preset buttons */
-.view-controls {
+/* ── Right-side control column ────────────────────────────────────────────── */
+
+.right-controls {
   position: absolute;
-  bottom: 12px;
-  right: 12px;
+  top: 10px;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+/* ── Floor control ────────────────────────────────────────────────────────── */
+
+.floor-control {
+  background: var(--surface);
+  border: 1px solid var(--border-md);
+  border-radius: var(--radius);
+  padding: 8px 10px;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 130px;
+}
+
+.floor-control-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-hint);
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2px;
+}
+
+.floor-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.floor-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 7px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 11px;
+  font-family: var(--font);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.1s, border-color 0.1s, color 0.1s;
+  text-align: left;
+  width: 100%;
+}
+
+.floor-step:hover {
+  background: var(--bg);
+  border-color: var(--border);
+}
+
+.floor-step.active {
+  background: var(--text);
+  color: #fff;
+  border-color: var(--text);
+}
+
+.floor-step .pips {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5px;
+  flex-shrink: 0;
+}
+
+.floor-step .pips span {
+  display: block;
+  width: 14px;
+  height: 3px;
+  border-radius: 1px;
+  background: currentColor;
+  opacity: 0.3;
+}
+
+.floor-step .pips span.on {
+  opacity: 1;
+}
+
+/* ── View preset + export buttons ────────────────────────────────────────── */
+
+.view-controls {
+  background: var(--surface);
+  border: 1px solid var(--border-md);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 130px;
+  margin-top: auto;
+}
+
+.view-step {
+  justify-content: center;
+  padding: 6px 8px;
 }
 
 .view-btn {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  background: var(--surface);
-  border: 1px solid var(--border-md);
+  gap: 8px;
+  padding: 4px 7px;
   border-radius: var(--radius-sm);
-  font-size: 13px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 11px;
+  font-family: var(--font);
   color: var(--text-muted);
-  transition: background 0.12s, color 0.12s, border-color 0.12s;
+  cursor: pointer;
+  transition: background 0.1s, border-color 0.1s, color 0.1s;
+  text-align: left;
+  width: 100%;
 }
 
 .view-btn:hover {
   background: var(--text);
   border-color: var(--text);
   color: #fff;
+}
+
+.view-btn-divider {
+  width: 30px;
+  height: 1px;
+  background: var(--border);
+  margin: 2px 0;
 }
 
 /* Status badge */

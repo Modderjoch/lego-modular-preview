@@ -15,17 +15,17 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"part.1233",
+			"name":"part",
 			"rotation":[
-				0.5000025629997253,
-				-0.49999743700027466,
-				0.49999743700027466,
-				0.5000025629997253
+				0.7071068286895752,
+				0,
+				0,
+				0.7071068286895752
 			],
 			"translation":[
-				124,
-				121.5999984741211,
-				-63.999996185302734
+				0,
+				-1.399999976158142,
+				0
 			]
 		},
 		{
@@ -50,7 +50,7 @@
 	],
 	"meshes":[
 		{
-			"name":"2431.005",
+			"name":"3811.002",
 			"primitives":[
 				{
 					"attributes":{
@@ -81,61 +81,61 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":8074759,
+			"count":574427,
 			"max":[
-				191.9600372314453,
-				252.002197265625,
-				122.98001098632812
+				135.96005249023438,
+				157.7644805908203,
+				-0.019999980926513672
 			],
 			"min":[
-				-63.96254348754883,
-				-11.959824562072754,
-				-184.1999969482422
+				-128.5796356201172,
+				-127.92145538330078,
+				-307.23089599609375
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":8074759,
+			"count":574427,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":8074759,
+			"count":574427,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5125,
-			"count":14424765,
+			"count":805422,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":96897108,
+			"byteLength":6893124,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":96897108,
-			"byteOffset":96897108,
+			"byteLength":6893124,
+			"byteOffset":6893124,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":64598072,
-			"byteOffset":193794216,
+			"byteLength":4595416,
+			"byteOffset":13786248,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":57699060,
-			"byteOffset":258392288,
+			"byteLength":3221688,
+			"byteOffset":18381664,
 			"target":34963
 		}
 	],
@@ -147,7 +147,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":316091348,
+			"byteLength":21603352,
 			"uri":"parisian-restaurant.bin"
 		}
 	]

@@ -15,17 +15,17 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"part.650",
+			"name":"part.990",
 			"rotation":[
-				0.5000025629997253,
-				0.49999743700027466,
-				-0.49999743700027466,
-				0.5000025629997253
+				0.7071068286895752,
+				0,
+				0,
+				0.7071068286895752
 			],
 			"translation":[
-				124,
-				121.59999084472656,
-				48.000003814697266
+				64,
+				137.60000610351562,
+				72.00000762939453
 			]
 		},
 		{
@@ -50,7 +50,7 @@
 	],
 	"meshes":[
 		{
-			"name":"3010.004",
+			"name":"3795.003",
 			"primitives":[
 				{
 					"attributes":{
@@ -81,61 +81,61 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":870420,
+			"count":655015,
 			"max":[
-				175.855712890625,
-				11.960091590881348,
-				122.9800033569336
+				71.96090698242188,
+				61.60410690307617,
+				138.98001098632812
 			],
 			"min":[
-				-85.54153442382812,
-				-252.0814971923828,
-				-204.65362548828125
+				-192.06686401367188,
+				-199.87857055664062,
+				-188.7800750732422
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":870420,
+			"count":655015,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":870420,
+			"count":655015,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5125,
-			"count":1061778,
+			"count":873069,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":10445040,
+			"byteLength":7860180,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":10445040,
-			"byteOffset":10445040,
+			"byteLength":7860180,
+			"byteOffset":7860180,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":6963360,
-			"byteOffset":20890080,
+			"byteLength":5240120,
+			"byteOffset":15720360,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":4247112,
-			"byteOffset":27853440,
+			"byteLength":3492276,
+			"byteOffset":20960480,
 			"target":34963
 		}
 	],
@@ -147,7 +147,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":32100552,
+			"byteLength":24452756,
 			"uri":"market-street.bin"
 		}
 	]

@@ -214,6 +214,7 @@ function _showLoader(modularName = '') {
   const text = document.getElementById('loader-text');
   if (!text) return;
 
+  clearInterval(_loaderInterval);
   let dotCount = 0;
 
   _loaderInterval = setInterval(() => {

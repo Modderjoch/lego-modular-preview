@@ -40,15 +40,18 @@
   opacity: 0.6;
 }
 
-.right-controls {
+/* ── Desktop: floor panel top-right, view panel bottom-right ─────────────── */
+
+.floor-controls-wrap {
   position: absolute;
   top: 10px;
+  right: 10px;
+}
+
+.view-controls-wrap {
+  position: absolute;
   bottom: 10px;
   right: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: flex-end;
 }
 
 .floor-control {
@@ -59,7 +62,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  min-width: 130px;
+  min-width: 150px;
 }
 
 .floor-control-label {
@@ -135,26 +138,13 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  min-width: 130px;
-  margin-top: auto;
-}
-
-.view-step {
-  justify-content: center;
-  padding: 6px 8px;
-}
-
-@media (max-width: 640px) {
-
-  .view-controls {
-    min-width: 50px;
-  }
+  min-width: 150px;
 }
 
 .view-btn {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   padding: 4px 7px;
   border-radius: var(--radius-sm);
   border: 1px solid transparent;
@@ -175,11 +165,13 @@
 }
 
 .view-btn-divider {
-  width: 30px;
+  width: 100%;
   height: 1px;
   background: var(--border);
   margin: 2px 0;
 }
+
+/* ── Loader ──────────────────────────────────────────────────────────────── */
 
 #loader {
   position: absolute;
@@ -196,7 +188,6 @@
   font-family: 'Inter', sans-serif;
   z-index: 999;
   pointer-events: none;
-  /* allow clicks to pass through */
 }
 
 #loader.hidden {
@@ -214,4 +205,116 @@
   font-size: 14px;
   font-weight: 500;
   color: var(--text-muted);
+}
+
+/* ── Mobile ──────────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+
+  /* Floor: compact pill anchored top-right */
+  .floor-controls-wrap {
+    top: 6px;
+    right: 6px;
+    bottom: auto;
+    left: auto;
+  }
+
+  .floor-control {
+    flex-direction: row;
+    align-items: center;
+    gap: 2px;
+    padding: 4px 8px;
+    border-radius: 20px;
+    min-width: 0;
+  }
+
+  .floor-control .floor-control-label {
+    display: none;
+  }
+
+  .floor-btns {
+    flex-direction: row;
+    gap: 2px;
+  }
+
+  /* Pips hidden on mobile */
+  .floor-step .pips {
+    display: none;
+  }
+
+  /* Show the short label via data-short attr, hide full text */
+  .floor-step .floor-lbl {
+    display: none;
+  }
+
+  .floor-step::after {
+    content: attr(data-short);
+  }
+
+  .floor-step {
+    padding: 3px 8px;
+    border-radius: 12px;
+    width: auto;
+    font-size: 10px;
+  }
+
+  /* View: pinned bottom bar, full width, horizontally scrollable */
+  .view-controls-wrap {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+  }
+
+  .view-controls {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 4px;
+    padding: 8px 12px;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    min-width: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    background: #ffffff00;
+  }
+
+  .view-controls::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide the section label in the horizontal bar */
+  .view-controls .floor-control-label {
+    display: none;
+  }
+
+  .view-btn {
+    flex-shrink: 0;
+    padding: 5px 11px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    font-size: 11px;
+    width: auto;
+    white-space: nowrap;
+  }
+
+  .view-btn:hover,
+  .view-btn:active {
+    background: var(--text);
+    border-color: var(--text);
+    color: #fff;
+  }
+
+  .view-btn-divider {
+    flex-shrink: 0;
+    width: 1px;
+    height: 18px;
+    background: var(--border);
+    margin: 0 2px;
+  }
 }

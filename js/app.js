@@ -149,9 +149,66 @@ function wireUI() {
   document.getElementById('clear-btn').addEventListener('click', clearStreet);
 
   document.getElementById('export-btn').addEventListener('click', exportImage);
+
+  document.getElementById('save-layout-btn').addEventListener('click', exportLayout);
+
+  document.getElementById('load-layout-input').addEventListener('change', (e) => {
+    importLayout(e.target.files[0]);
+    e.target.value = ''; // reset so the same file can be re-imported
+  });
+
+  document.getElementById('load-layout-btn').addEventListener('click', () => {
+    document.getElementById('load-layout-input').click();
+  });
 }
 
-// ─── Export ───────────────────────────────────────────────────────────────────
+// ─── Layout save / load ───────────────────────────────────────────────────────
+
+function exportLayout() {
+  const payload = {
+    version: 1,
+    savedAt: new Date().toISOString(),
+    instances: streetInstances.map(({ modularId, rotation }) => ({ modularId, rotation: rotation || 0 })),
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'modular-street.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function importLayout(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const payload = JSON.parse(e.target.result);
+      const raw = Array.isArray(payload) ? payload : payload.instances;
+      if (!Array.isArray(raw)) throw new Error('Invalid format');
+
+      // Validate each entry refers to a known modular
+      const valid = raw.filter(({ modularId }) => MODULARS.some((m) => m.id === modularId));
+      if (valid.length === 0) throw new Error('No recognised buildings found');
+
+      streetInstances = valid.map(({ modularId, rotation }) => ({
+        uid: 'b' + (++uidCounter),
+        modularId,
+        rotation: rotation || 0,
+      }));
+
+      syncStreet();
+      if (streetInstances.length > 0) {
+        document.getElementById('viewport-hint').style.opacity = '0';
+      }
+    } catch (err) {
+      alert('Could not load layout: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ─── Image export ─────────────────────────────────────────────────────────────
 
 function exportImage() {
   const canvas = document.getElementById('canvas3d');
@@ -205,7 +262,7 @@ function updateFloorControl() {
   controlEl.style.display = 'block';
 
   // "All floors" button
-  const allBtn = _makeFloorBtn('All floors', maxFloors, maxFloors, () => {
+  const allBtn = _makeFloorBtn('All floors', 'All', maxFloors, maxFloors, () => {
     _currentFloor = Infinity;
     setFloorClip(Infinity);
     _setActive(allBtn);
@@ -215,8 +272,9 @@ function updateFloorControl() {
   // Buttons from top floor down to ground only
   for (let f = maxFloors - 1; f >= 1; f--) {
     const floor = f;
-    const label = floor === 1 ? 'Ground floor only' : `${floor} floors`;
-    const btn = _makeFloorBtn(label, floor, maxFloors, () => {
+    const ordinal = floor === 1 ? 'Ground floor' : `${_ordinal(floor - 1)} floor`;
+    const short = floor === 1 ? 'G' : `${floor}`;
+    const btn = _makeFloorBtn(ordinal, short, floor, maxFloors, () => {
       _currentFloor = floor;
       setFloorClip(floor * FLOOR_HEIGHT);
       _setActive(btn);
@@ -240,9 +298,16 @@ function updateFloorControl() {
   }
 }
 
-function _makeFloorBtn(label, visibleFloors, maxFloors, onClick) {
+function _ordinal(n) {
+  const s = ['th', 'st', 'nd', 'rd'];
+  const v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+function _makeFloorBtn(label, shortLabel, visibleFloors, maxFloors, onClick) {
   const btn = document.createElement('button');
   btn.className = 'floor-step';
+  btn.dataset.short = shortLabel ?? label;
 
   // Pip bars — one per floor, filled = visible
   const pips = document.createElement('div');
@@ -254,6 +319,7 @@ function _makeFloorBtn(label, visibleFloors, maxFloors, onClick) {
   }
 
   const lbl = document.createElement('span');
+  lbl.className = 'floor-lbl';
   lbl.textContent = label;
 
   btn.appendChild(pips);

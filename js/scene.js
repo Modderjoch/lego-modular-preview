@@ -406,6 +406,7 @@ function rebuildStreet(instances, camControls, onDone) {
       cursorX += snapW;
     });
 
+    _hideLoader();
     if (onDone) onDone();
   }
 }

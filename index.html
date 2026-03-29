@@ -41,23 +41,29 @@
         </div>
       </div>
 
-      <div class="right-controls">
-
+      <div class="floor-controls-wrap">
         <div class="floor-control" id="floor-control" style="display:none;">
           <div class="floor-control-label">Stories</div>
           <div class="floor-btns" id="floor-btns"></div>
         </div>
+      </div>
 
+      <div class="view-controls-wrap">
         <div class="view-controls">
           <div class="floor-control-label">View</div>
-          <button class="view-btn" title="Export image" id="export-btn">Download ↓</button>
-          <div class="view-btn-divider"></div>
           <button class="view-btn" title="Front view" data-view="front">Front</button>
           <button class="view-btn" title="Side view" data-view="side">Side</button>
           <button class="view-btn" title="Top view" data-view="top">Top</button>
           <button class="view-btn" title="Reset view" data-view="reset">Reset ↺</button>
+          <div class="view-btn-divider"></div>
+          <button class="view-btn view-btn--action" title="Download screenshot as PNG" id="export-btn">📷
+            Screenshot</button>
+          <button class="view-btn view-btn--action" title="Save layout as JSON file" id="save-layout-btn">💾 Save
+            configuration</button>
+          <button class="view-btn view-btn--action" title="Load a saved layout JSON" id="load-layout-btn">📂 Load
+            configuration</button>
+          <input type="file" id="load-layout-input" accept=".json" style="display:none;" />
         </div>
-
       </div>
     </main>
 

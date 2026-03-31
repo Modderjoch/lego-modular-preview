@@ -15,37 +15,62 @@
 .panel-tabs {
   display: flex;
   flex-shrink: 0;
-  gap: 0;
-  padding: 20px 20px 0;
+  gap: 6px;
+  padding: 12px 10px 10px;
+  background: var(--surface);
   border-bottom: 1px solid var(--border);
 }
 
 .panel-tab {
   flex: 1;
-  padding: 6px 4px 8px;
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 11px;
   font-weight: 600;
   font-family: var(--font);
-  color: var(--text-hint);
+  color: var(--text-muted);
   cursor: pointer;
-  letter-spacing: 0.02em;
-  transition: color 0.12s, border-color 0.12s;
+  letter-spacing: 0.01em;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
   white-space: nowrap;
   text-align: center;
-  margin-bottom: -1px;
-  /* sit on top of the border-bottom of .panel-tabs */
 }
 
 .panel-tab:hover {
-  color: var(--text-muted);
+  background: var(--border);
+  color: var(--text);
 }
 
 .panel-tab.active {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
+  background: var(--text);
+  border-color: var(--text);
+  color: #fff;
+}
+
+.panel-tab .tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 9px;
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(238, 109, 11, 0.1);
+  color: inherit;
+  transition: background 0.12s;
+  line-height: 1;
+}
+
+.panel-tab.active .tab-count {
+  background: rgba(255, 255, 255, 0.20);
 }
 
 /* ── Desktop building list ───────────────────────────────────────────────── */
@@ -162,16 +187,24 @@
     overflow: hidden;
   }
 
-  /* Tab bar: full-width row of equal tabs */
+  /* Tab bar: full-width row of equal pill tabs */
   .panel-tabs {
-    padding: 0;
-    gap: 0;
+    padding: 8px 8px 6px;
+    gap: 5px;
     border-bottom: 1px solid var(--border);
   }
 
   .panel-tab {
-    padding: 8px 6px;
-    font-size: 11px;
+    padding: 6px 4px;
+    font-size: 10px;
+    gap: 4px;
+  }
+
+  .panel-tab .tab-count {
+    min-width: 16px;
+    height: 22px;
+    font-size: 9px;
+    padding: 0 4px;
   }
 
   /* Building list: horizontal scrolling strip */
@@ -213,7 +246,7 @@
   }
 
   .building-btn .swatch {
-    width: 80px;
+    width: 72px;
     height: 72px;
     border-radius: 0;
     flex-shrink: 0;

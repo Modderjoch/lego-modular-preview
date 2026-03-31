@@ -72,12 +72,16 @@ function buildPanel() {
   const LABELS = { official: 'Official', unofficial: 'Unofficial', road: 'Roads' };
 
   categories.forEach((cat) => {
+    const count = grouped[cat].length;
     const tab = document.createElement('button');
     tab.className = 'panel-tab' + (cat === _activeCategory ? ' active' : '');
-    tab.textContent = LABELS[cat] || cat.charAt(0).toUpperCase() + cat.slice(1);
     tab.setAttribute('role', 'tab');
     tab.setAttribute('aria-selected', cat === _activeCategory ? 'true' : 'false');
     tab.dataset.cat = cat;
+
+    const labelText = LABELS[cat] || cat.charAt(0).toUpperCase() + cat.slice(1);
+    tab.innerHTML = `${labelText}<span class="tab-count">${count}</span>`;
+
     tab.addEventListener('click', () => switchTab(cat));
     tabBar.appendChild(tab);
   });
@@ -216,7 +220,7 @@ function shareLayout() {
   if (navigator.share) {
     navigator.share({
       title: 'My Modular LEGO® Street',
-      text: 'Check out my LEGO® modular street!',
+      text: 'Check out my LEGO Modular street!',
       url,
     }).catch(() => { }); // user cancelled — ignore
     return;

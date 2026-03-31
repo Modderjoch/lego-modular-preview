@@ -2,13 +2,20 @@
 
 **[modular.modderjoch.nl](https://modular.modderjoch.nl)** — Plan your LEGO® modular buildings street before you build it.
 
-<img width="1864" height="960" alt="preview" src="https://github.com/user-attachments/assets/e44cd9d7-d9ee-43bc-9eb4-5300398d5911" />
+<img width="932" height="480" alt="preview" src="https://github.com/user-attachments/assets/e44cd9d7-d9ee-43bc-9eb4-5300398d5911" />
 
 ## What it is
 
 The Modular LEGO® Previewer is a browser-based 3D tool that lets you compose a virtual street from LEGO® modular buildings and see how they look side by side before committing to the real thing.
 
 Pick any combination of sets, arrange them in any order, rotate individual buildings, and explore the result from any angle. No install, no account, no fuss. It runs entirely in the browser.
+
+- [Features](#features)
+- [Controls](#controls)
+- [How it works](#how-it-works)
+- [Future](#future)
+- [Currently known bugs](#currently-known-bugs)
+- [Disclaimer](#disclaimer)
 
 ## Features
 
@@ -30,8 +37,8 @@ The Stories control lets you clip the scene at any floor level — handy for ins
 ### 📷 Screenshot export
 Download the current 3D view as a PNG with one click.
 
-### 💾 Save & load layouts
-Export your street as a small JSON file and reload it later — or share it with someone else. The file only stores set IDs and rotations, so it's tiny and human-readable.
+### 🔗 Share layouts
+Share your street with someone else, or save it for later. The link only stores set IDs and rotations.
 
 ### 📱 Mobile-friendly
 The interface adapts for smaller screens: the building panel becomes a horizontally scrollable strip, camera controls move to a swipeable bottom bar, and touch gestures handle orbit, pinch-zoom, and two-finger pan.
@@ -81,6 +88,31 @@ Models are loaded on demand and cached in memory, so adding a second copy of a b
 
 3D models are sourced from [Mecabricks](https://www.mecabricks.com) and processed through Blender for export as GLTF. Each model lives in its own subfolder under `models/<category>/<id>/` alongside a `thumbnail.jpg` used in the panel.
 
+## Future
+###### Simply ideas for now :)
+### Feature list
+* Allowing varying street sizes
+  * Preset shapes
+  * Custom grid
+  * L-shape
+* Measurements of the height and width
+* Splitting certain buildings (bookshop, pet shop, market street, spring lantern festival, bricklink construction site)
+* Spacing restrictions (applying restrictions and finding most optimal display)
+* Adding/removing middle floors
+
+### Model List
+* Sesame Street
+* Ninjago City Docks
+* ~~Brick Cross Train Station - 910034~~ (No available model found as of April 2026)
+* ~~Shopping Street - 11371~~ (No available model found as of April 2026)
+* ~~Toy Store Employee Gift 2025 - 4002025~~ (No available model found as of April 2026)
+* ~~Ninjago City Markets - 71799~~ (Processing issues as of April 2026)
+* Custom MOCs (?)
+* Rebrickable sets (?)
+
+## Currently known bugs
+* Removing buildings while they're being build is allowed, causing buildings to still load but being impossible to remove.
+* Buildings bigger than one plate rotate incorrectly.
 
 ## Disclaimer
 
